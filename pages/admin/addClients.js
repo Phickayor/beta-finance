@@ -1,17 +1,20 @@
-import React, { useReducer } from "react";
-import { RedirectToLogin } from "../auth/authUtils";
+import AuthContext from "@/contexts/AuthContext";
+import { useContext } from "react";
 
 function AddClients() {
-  const [AuthorizationState, authDispatch] = useReducer(authReducer);
-  if (!AuthorizationState.isAuthorized) {
-    RedirectToLogin();
-  } else {
-    return (
-      <>
-        <h1>New Page</h1>
-      </>
-    );
-  }
-}
+  const { state } = useContext(AuthContext);
 
+  if (!state.isAuthorized) {
+    // Redirect logic or handle unauthorized access
+    return <div>Unauthorized access</div>;
+  }
+
+  return (
+    <>
+      <h1>New Page</h1>
+      {/* Other content */}
+    </>
+  );
+}
+AddClients.protected = true;
 export default AddClients;
