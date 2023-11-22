@@ -1,11 +1,15 @@
 import Header from "@/components/Header";
 import baseurl from "@/config/host";
+import authReducer from "@/reducers/AuthReducer";
 import userReducer from "@/reducers/userReducer";
 import Cookies from "js-cookie";
-import { useRouter } from "next/router";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer } from "react";
+import { RedirectToLogin } from "../auth/authUtils";
 
 function Home() {
+  var initialAuth = {
+    isAuthorized: false
+  };
   var initialUserDetails = {
     business_name: "",
     email: "",
@@ -13,8 +17,10 @@ function Home() {
     clients: null
   };
   const [userDetails, dispatch] = useReducer(userReducer, initialUserDetails);
-  const [isAuthorized, setAuthorization] = useState(false);
-  const router = useRouter();
+  const [AuthorizationState, authDispatch] = useReducer(
+    authReducer,
+    initialAuth
+  );
   const token = Cookies.get("token");
 
   const verifyToken = async () => {
@@ -29,7 +35,7 @@ function Home() {
     if (res.ok) {
       console.log("authorized");
       dispatch(data.user);
-      setAuthorization(true);
+      authDispatch();
     } else {
       console.log("unauthorized");
       alert(data.message);
@@ -39,12 +45,8 @@ function Home() {
   useEffect(() => {
     verifyToken();
   });
-  if (!isAuthorized) {
-    if (typeof window !== "undefined") {
-      router.push({
-        pathname: "/auth"
-      });
-    }
+  if (!AuthorizationState.isAuthorized) {
+    RedirectToLogin();
   } else {
     return (
       <>
