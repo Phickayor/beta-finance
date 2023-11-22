@@ -2,7 +2,7 @@ import Header from "@/components/Header";
 import baseurl from "@/config/host";
 import userReducer from "@/reducers/userReducer";
 import Cookies from "js-cookie";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import React, { useEffect, useReducer, useState } from "react";
 
 function Home() {
@@ -14,6 +14,7 @@ function Home() {
   };
   const [userDetails, dispatch] = useReducer(userReducer, initialUserDetails);
   const [isAuthorized, setAuthorization] = useState(false);
+  const router = useRouter();
   const token = Cookies.get("token");
 
   const verifyToken = async () => {
@@ -39,9 +40,11 @@ function Home() {
     verifyToken();
   });
   if (!isAuthorized) {
-    Router.push({
-      pathname: "/auth"
-    });
+    if (typeof window !== "undefined") {
+      router.push({
+        pathname: "/auth"
+      });
+    }
   } else {
     return (
       <>
