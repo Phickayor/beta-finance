@@ -16,11 +16,13 @@ export default function Home() {
       />
       <Header />
 
-      <div className="mx-auto w-11/12 relative">
+      <div className="relative">
         <Hero />
-        <HowItWorks />
-        <WhatWeDo />
-        <Goals />
+        <div className="mx-auto w-11/12">
+          <HowItWorks />
+          <WhatWeDo />
+          <Goals />
+        </div>
       </div>
       <Footer />
     </main>
