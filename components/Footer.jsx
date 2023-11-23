@@ -3,7 +3,7 @@ import React from "react";
 function Footer() {
   return (
     <div className="text-center bg-purple text-white p-8 md:py-16 space-y-8">
-      <ul className="flex flex-wrap font-poppins-semibold footer-lists [&>*]:cursor-pointer md:text-[18px] justify-center gap-5">
+      <ul className="flex flex-wrap font-poppins-light footer-lists [&>*]:cursor-pointer md:text-[18px] justify-center gap-5">
         <li>Service</li>
         <li>Support</li>
         <li>Company</li>

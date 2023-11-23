@@ -2,7 +2,7 @@ import React from "react";
 
 function WhatWeDo() {
   return (
-    <div className="py-5">
+    <div className="py-5 space-y-8">
       <h1 className="sub-heading my-4 md:my-8 lg:my-16">What we do ?</h1>
       <div className="flex flex-col gap-12 text-lg md:text-2xl lg:text-3xl font-poppins-light">
         <div className="bg-white p-8 md:p-10 lg:p-14 text-black">
