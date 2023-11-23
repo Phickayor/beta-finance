@@ -1,5 +1,6 @@
 import baseurl from "@/config/host";
 import Cookies from "js-cookie";
+import Link from "next/link";
 import Router from "next/router";
 import React, { useState } from "react";
 
@@ -35,7 +36,7 @@ function Login() {
     <div className="h-screen flex flex-col justify-center">
       <form
         onSubmit={HandleSubmit}
-        className="mx-auto w-1/2 border-2 py-20 space-y-5 text-xl text-center"
+        className="mx-auto md:w-9/12 px-5 py-10 space-y-5 text-xl text-center"
       >
         <div className=" mx-auto w-10/12 [&>*]:block [&>*]:my-4">
           <label>Email</label>
@@ -65,6 +66,12 @@ function Login() {
           type="Submit"
           className="py-2 px-10 font-semibold cursor-pointer bg-white text-black"
         />
+        <p>
+          Don&apos;t have an account?
+          <Link href="/auth/register" className="text-blue-500 underline">
+            &nbsp;Sign Up
+          </Link>
+        </p>
       </form>
     </div>
   );

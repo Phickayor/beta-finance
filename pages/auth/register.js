@@ -1,5 +1,6 @@
 import baseurl from "@/config/host";
 import formReducer from "@/reducers/formReducer";
+import Link from "next/link";
 import Router from "next/router";
 import React, { useReducer } from "react";
 
@@ -44,9 +45,9 @@ function Register() {
     <div className="h-screen flex flex-col justify-center">
       <form
         onSubmit={HandleSubmit}
-        className="mx-auto w-1/2 border-2 py-20 space-y-5 text-xl text-center"
+        className="mx-auto md:w-9/12 px-5 py-10 space-y-5 text-xl text-center"
       >
-        <div className=" mx-auto w-10/12 [&>*]:block [&>*]:my-4">
+        <div className="[&>*]:block [&>*]:my-4">
           <label>Your Business Name</label>
           <input
             type="text"
@@ -54,10 +55,10 @@ function Register() {
             required
             value={formState.business_name}
             onChange={(e) => HandleContentChange(e)}
-            className="mx-auto w-10/12 px-5 focus:outline-none text-black"
+            className="px-5 w-full focus:outline-none text-black"
           />
         </div>
-        <div className=" mx-auto w-10/12 [&>*]:block [&>*]:my-4">
+        <div className="[&>*]:block [&>*]:my-4">
           <label>Email</label>
           <input
             type="email"
@@ -65,10 +66,10 @@ function Register() {
             required
             value={formState.email}
             onChange={(e) => HandleContentChange(e)}
-            className="mx-auto w-10/12 px-5 focus:outline-none text-black"
+            className="px-5 w-full focus:outline-none text-black"
           />
         </div>
-        <div className=" mx-auto w-10/12 [&>*]:block [&>*]:my-4">
+        <div className="[&>*]:block [&>*]:my-4">
           <label>Password</label>
           <input
             type="password"
@@ -76,13 +77,19 @@ function Register() {
             required
             value={formState.pswd}
             onChange={(e) => HandleContentChange(e)}
-            className="mx-auto w-10/12 px-5 focus:outline-none text-black"
+            className="px-5 w-full focus:outline-none text-black"
           />
         </div>
         <input
           type="Submit"
           className="py-2 px-10 font-semibold cursor-pointer bg-white text-black"
         />
+        <p>
+         Already have an account?
+          <Link href="/auth/" className="text-blue-500 underline">
+            &nbsp;Login
+          </Link>
+        </p>
       </form>
     </div>
   );

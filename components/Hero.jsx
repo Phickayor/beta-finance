@@ -2,7 +2,7 @@ import React from "react";
 
 function Hero() {
   return (
-    <div className="relative flex justify-between md:py-6 py-12 overflow-hidden">
+    <div className="relative flex justify-between md:py-6 py-14 sm:py-32 overflow-hidden">
       <div className="md:w-2/3 pl-5 md:px-10 z-20 ">
         <h1 className="heading">
           Simplifying <br className="hidden lg:block" />
