@@ -1,4 +1,4 @@
-import { TokenVerification, VerifyToken } from "@/components/TokenVerification";
+import { VerifyToken } from "@/components/TokenVerification";
 import AuthContext, { AuthProvider } from "@/contexts/AuthContext";
 import authReducer from "@/reducers/AuthReducer";
 import "@/styles/globals.css";
@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }) {
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
   // useEffect(() => {
-  VerifyToken();
+  // VerifyToken();
   // }, [state]);
 
   if (Component.protected) {

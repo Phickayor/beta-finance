@@ -2,26 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@font-face {
+  font-family: "Poppins-Light";
+  src: url("/fonts/poppins/Poppins-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+@font-face {
+  font-family: "Poppins";
+  src: url("/fonts/poppins/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
-
+@font-face {
+  font-family: "Poppins-Semibold";
+  src: url("/fonts/poppins/Poppins-Semibold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+.font-poppins-light {
+  font-family: "Poppins-Light", sans-serif;
+}
+.font-poppins {
+  font-family: "Poppins", sans-serif;
+}
+.font-poppins-semibold {
+  font-family: "Poppins-Semibold", sans-serif;
+}
+.heading {
+  @apply text-[90px] leading-[105px] font-semibold font-poppins-semibold;
+}
+.sub-heading {
+  @apply font-semibold text-[64px];
+}
+.process-container div {
+  @apply bg-black text-white text-center py-6;
+}
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply bg-background min-h-screen font-poppins;
 }
