@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }) {
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
   // useEffect(() => {
-  // VerifyToken();
+  VerifyToken();
   // }, [state]);
 
   if (Component.protected) {

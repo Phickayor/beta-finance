@@ -20,7 +20,7 @@ function Register() {
   const HandleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${baseurl}/auth/register`, {
+      const res = await fetch(`${baseurl}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

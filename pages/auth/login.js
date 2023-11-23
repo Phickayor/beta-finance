@@ -10,7 +10,7 @@ function Login() {
   const HandleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${baseurl}/auth/login`, {
+      const res = await fetch(`${baseurl}/signin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
