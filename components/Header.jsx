@@ -4,9 +4,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 function Header() {
   return (
-    <div className={`${inter.className} py-10 text-[32px] flex justify-between`}>
-      <h1 className="text-white">Beta finance</h1>
-      <button className="bg-background rounded-[10px] text-black font-poppins-light py-3 px-14">
+    <div
+      className={`relative z-30 ${inter.className} px-5 py-2 md:py-5 md:px-12 md:text-2xl lg:text-[32px] sticky top-0 backdrop-blur flex justify-between`}
+    >
+      <h1 className="text-white self-center">Beta finance</h1>
+      <button className="bg-background rounded-[10px] self-center font-poppins-light py-2 px-5 md:py-2 md:px-10 lg:py-4 lg:px-14">
         sign in &gt;
       </button>
     </div>

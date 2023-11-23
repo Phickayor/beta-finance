@@ -2,9 +2,9 @@ import React from "react";
 
 function HowItWorks() {
   return (
-    <div className="py-10 space-y-8">
-      <h1 className="sub-heading">How it works</h1>
-      <div className="grid grid-cols-3 process-container gap-5 text-[32px]">
+    <div className="space-y-8 py-5">
+      <h1 className="sub-heading my-4 md:my-8 lg:my-16 ">How it works</h1>
+      <div className="grid md:grid-cols-3 process-container gap-3 md:gap-5 text-lg lg:text-2xl xl:text-[32px]">
         <div>
           <h3>✌️ Create an account </h3>
         </div>
@@ -14,7 +14,7 @@ function HowItWorks() {
         <div>
           <h3>💡track payment</h3>
         </div>
-        <div className="col-span-3">
+        <div className="md:col-span-3">
           <h3>📑 Receive real-time alerts for unpaid invoices.</h3>
         </div>
       </div>

@@ -30,13 +30,16 @@
   font-family: "Poppins-Semibold", sans-serif;
 }
 .heading {
-  @apply text-[90px] leading-[105px] font-semibold font-poppins-semibold;
+  @apply text-3xl leading-[40px] md:text-5xl md:leading-[60px] lg:text-7xl lg:leading-[75px] xl:text-[90px] xl:leading-[105px] font-semibold font-poppins-semibold;
 }
 .sub-heading {
-  @apply font-semibold text-[64px];
+  @apply font-semibold text-4xl lg:text-[64px];
 }
 .process-container div {
-  @apply bg-black text-white text-center py-6;
+  @apply bg-black text-white text-center py-3 md:py-6 lg:py-10;
+}
+.footer-lists li, .footer-lists img {
+  @apply  hover:scale-110;
 }
 body {
   @apply bg-background min-h-screen font-poppins;

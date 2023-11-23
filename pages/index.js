@@ -11,11 +11,12 @@ export default function Home() {
     <main className="bg-[#FDD8DC] min-h-screen relative">
       <img
         src="/images/header-bg.png"
-        className="absolute"
+        className="absolute bg-cover "
         alt="Header Background"
       />
+      <Header />
+
       <div className="mx-auto w-11/12 relative">
-        <Header />
         <Hero />
         <HowItWorks />
         <WhatWeDo />
