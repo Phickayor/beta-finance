@@ -1,7 +1,7 @@
 import AuthContext from "@/contexts/AuthContext";
 import { useContext } from "react";
 
-function AddClients() {
+function Clients() {
   const { state } = useContext(AuthContext);
 
   if (!state.isAuthorized) {
@@ -16,5 +16,5 @@ function AddClients() {
     </>
   );
 }
-AddClients.protected = true;
-export default AddClients;
+Clients.protected = true;
+export default Clients;

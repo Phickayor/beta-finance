@@ -1,12 +1,29 @@
 import baseurl from "@/config/host";
+import userReducer from "@/reducers/userReducer";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import Router from "next/router";
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const initialUserState = {};
+
+  const [UserState, dispatch] = useReducer(userReducer, initialUserState);
+
+  const UpdateUserData = (dispatch, user) => {
+    // Dispatch an action to update user data
+    Object.keys(user).forEach((field) => {
+      dispatch({
+        type: "UPDATE_USER_DATA",
+        field,
+        value: user[field]
+      });
+    });
+  };
+
   const HandleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -20,9 +37,10 @@ function Login() {
       const data = await res.json();
       if (res.ok) {
         console.log("Logged in Sucessfully");
-        Cookies.set("token", token);
+        Cookies.set("token", data.data.token.accesstoken);
+        UpdateUserData(dispatch, data.data.user);
         Router.push({
-          pathname: "/auth/login"
+          pathname: "/admin/"
         });
       } else {
         console.log(data.mesage);
