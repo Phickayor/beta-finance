@@ -38,8 +38,12 @@
 .process-container div {
   @apply bg-black text-white text-center py-3 md:py-6 lg:py-10;
 }
-.footer-lists li, .footer-lists img {
-  @apply  hover:scale-110;
+.footer-lists li,
+.footer-lists img {
+  @apply hover:scale-110;
+}
+.action-btn-parents * {
+  @apply bg-white text-purple mx-auto w-10/12 py-2 md:py-4 lg:py-6 rounded-lg font-poppins-semibold;
 }
 body {
   @apply bg-background min-h-screen font-poppins;
