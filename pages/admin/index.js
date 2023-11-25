@@ -9,15 +9,14 @@ function Home() {
   const { state } = useContext(AuthContext);
 
   if (state.isAuthorized) {
-    // Redirect logic or handle unauthorized access
     RedirectToLogin();
   }
 
   return (
     <div className="py-5 mx-auto w-11/12 space-y-8">
       <Header navText="Add Client" navLink="/admin/clients" />
-      <Welcome name={state.name} />
-      <ActivityBar />
+      <Welcome name={"James"} balance={"1000"} />
+      <ActivityBar activities={state.activities} />
     </div>
   );
 }

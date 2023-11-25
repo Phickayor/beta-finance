@@ -56,7 +56,7 @@ function SignUp(props) {
       >
         <input
           type="text"
-          name="business_name"
+          name="businessName"
           required
           placeholder="Business name"
           value={formState.business_name}
@@ -80,7 +80,7 @@ function SignUp(props) {
           value={formState.pswd}
           onChange={(e) => HandleContentChange(e)}
           className="py-1 md:py-2 lg:py-5 px-2 md:px-5 lg:px-8 w-full text-lg md:text-xl lg:text-2xl focus:outline-none border border-black placeholder:text-black black text-black"
-        />{" "}
+        />
         <input
           type="Submit"
           value="SIGN UP"
