@@ -51,7 +51,7 @@ function Login() {
     }
   };
   return (
-    <div className="relative bg-white mx-auto w-11/12 md:w-10/12 lg:w-9/12 space-y-8 px-5 py-10 text-center">
+    <div className="rounded-md relative bg-white mx-auto w-11/12 md:w-10/12 lg:w-9/12 space-y-8 px-5 py-10 text-center">
       <h1 className="text-xl md:text-2xl lg:text-3xl font-poppins-semibold ">
         Login to your account 📑
       </h1>

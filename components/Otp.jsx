@@ -22,7 +22,7 @@ function Otp(props) {
       alert(data.message);
       if (data.success) {
         setValues(...values, data.data);
-        alert("another otp has been sent successfully")
+        alert("another otp has been sent successfully");
       }
     } catch (error) {
       alert(
@@ -70,7 +70,7 @@ function Otp(props) {
     }
   };
   return (
-    <div className="relative bg-white mx-auto w-11/12 md:w-10/12 space-y-8 px-5 py-10 text-xl text-center">
+    <div className="rounded-md relative bg-white mx-auto w-11/12 md:w-10/12 space-y-5 px-5 py-10 text-xl text-center">
       <h1 className="text-2xl font-poppins-semibold ">Verify</h1>
       <p className="font-poppins-light">
         Your Verification code has been sent to
@@ -79,9 +79,9 @@ function Otp(props) {
       </p>
       <form
         onSubmit={HandleVerification}
-        className="mx-auto md:w-9/12 p-5 font-poppins-light space-y-5 text-xl text-center"
+        className="mx-auto md:w-9/12 p-5 font-poppins-light space-y-5 md:space-y-10 text-xl text-center"
       >
-        <div className="grid grid-cols-4 px-10 gap-4">
+        <div className="grid grid-cols-4 gap-4 ">
           {otpValues.map((value, index) => (
             <input
               key={index}

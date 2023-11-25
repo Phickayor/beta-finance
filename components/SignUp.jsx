@@ -24,7 +24,7 @@ function SignUp(props) {
       email: "jetawof@gmail.com",
       verificationKey: "dddddddddddddddddd"
     });
-
+    //Commenting till i get access to server
     // try {
     //   const res = await fetch(`${baseurl}/signup`, {
     //     method: "POST",
@@ -46,11 +46,13 @@ function SignUp(props) {
     // }
   };
   return (
-    <div className="relative bg-white mx-auto w-11/12 md:w-10/12 space-y-8 px-5 py-10 text-xl text-center">
-      <h1 className="text-2xl font-poppins-semibold ">Create an account 📑</h1>
+    <div className="rounded-md relative bg-white mx-auto w-11/12 md:w-10/12 lg:w-9/12 space-y-8 px-5 py-10 text-center">
+      <h1 className="text-xl md:text-2xl lg:text-3xl font-poppins-semibold ">
+        Create an account 📑
+      </h1>
       <form
         onSubmit={HandleSubmit}
-        className=" mx-auto w-10/12 [&>*]:block space-y-8 font-poppins-light"
+        className=" mx-auto w-11/12 md:w-10/12 [&>*]:block space-y-6 md:space-y-8 lg:space-y-10 font-poppins-light"
       >
         <input
           type="text"
@@ -59,7 +61,7 @@ function SignUp(props) {
           placeholder="Business name"
           value={formState.business_name}
           onChange={(e) => HandleContentChange(e)}
-          className="py-2 px-5 w-full text-xl focus:outline-none border border-black placeholder:text-black black text-black"
+          className="py-1 md:py-2 lg:py-5 px-2 md:px-5 lg:px-8 w-full text-lg md:text-xl lg:text-2xl focus:outline-none border border-black placeholder:text-black black text-black"
         />
         <input
           type="email"
@@ -68,7 +70,7 @@ function SignUp(props) {
           required
           value={formState.email}
           onChange={(e) => HandleContentChange(e)}
-          className="w-full border border-black py-2 px-5 text-xl focus:outline-none placeholder:text-black text-black"
+          className="py-1 md:py-2 lg:py-5 px-2 md:px-5 lg:px-8 w-full text-lg md:text-xl lg:text-2xl focus:outline-none border border-black placeholder:text-black black text-black"
         />
         <input
           type="password"
@@ -77,16 +79,16 @@ function SignUp(props) {
           required
           value={formState.pswd}
           onChange={(e) => HandleContentChange(e)}
-          className="w-full border border-black py-2 px-5 text-xl focus:outline-none placeholder:text-black text-black"
+          className="py-1 md:py-2 lg:py-5 px-2 md:px-5 lg:px-8 w-full text-lg md:text-xl lg:text-2xl focus:outline-none border border-black placeholder:text-black black text-black"
         />{" "}
         <input
           type="Submit"
           value="SIGN UP"
-          className="hover:scale-105 rounded-md mx-auto py-2 px-20 text-xl cursor-pointer bg-purple text-white"
+          className="rounded-md hover:scale-105 duration-300 mx-auto md:py-4 py-2 px-20 text-lg md:text-xl lg:text-2xl cursor-pointer bg-purple text-white"
         />
       </form>
-      <p>
-        Don&apos;t have an account?
+      <p className="text-lg md:text-xl lg:text-2xl ">
+        Already have an account?
         <Link href="/auth/" className="text-purple font-poppins-semibold">
           &nbsp;LOGIN
         </Link>
