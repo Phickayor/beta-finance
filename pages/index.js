@@ -11,7 +11,12 @@ export default function Home() {
     <main className="bg-[#FDD8DC] min-h-screen relative">
       <img
         src="/images/header-bg.png"
-        className="absolute bg-cover "
+        className="hidden md:block absolute object-cover"
+        alt="Header Background"
+      />
+      <img
+        src="/images/mobile-header-bg.png"
+        className="md:hidden block object-cover absolute "
         alt="Header Background"
       />
       <Header />
