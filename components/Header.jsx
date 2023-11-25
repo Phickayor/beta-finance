@@ -3,7 +3,7 @@ import React from "react";
 
 function Header(props) {
   return (
-    <div className="relative font-poppins z-30 px-5 py-2 md:py-5 md:px-12 md:text-2xl lg:text-[32px] backdrop-blur flex justify-between">
+    <div className="font-poppins z-30 px-5 py-2 md:py-5 md:px-12 md:text-2xl lg:text-[32px] relative flex justify-between">
       <h1 className="text-white self-center">Beta finance</h1>
       <Link
         href={props.navLink}

@@ -13,7 +13,12 @@ function Register() {
     <div>
       <img
         src="/images/auth-bg.png"
-        className="md:hidden block w-screen object-cover absolute "
+        className="hidden md:block w-screen object-cover absolute "
+        alt="Header Background"
+      />
+      <img
+        src="/images/mobile-auth-bg.png"
+        className="md:hidden w-screen object-cover absolute "
         alt="Header Background"
       />
 

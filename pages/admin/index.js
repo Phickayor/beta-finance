@@ -1,13 +1,14 @@
 import AuthContext from "@/contexts/AuthContext";
-import { useContext } from "react";
+import { useContext, useReducer } from "react";
 import RedirectToLogin from "../auth/authUtils";
 import Header from "@/components/Admin/Header";
 import Welcome from "@/components/Admin/Welcome";
 import ActivityBar from "@/components/Admin/ActivityBar";
+import userReducer from "@/reducers/userReducer";
 
 function Home() {
   const { state } = useContext(AuthContext);
-
+  const [userState] = useReducer(userReducer);
   if (state.isAuthorized) {
     RedirectToLogin();
   }

@@ -40,10 +40,10 @@ function AddClient() {
       >
         <input
           type="text"
-          name="business_name"
+          name="businessName"
           required
           placeholder="Business name"
-          value={clientState.business_name}
+          value={clientState.businessName}
           onChange={(e) => HandleContentChange(e)}
           className="border-b py-2 focus:outline-none focus:border-purple"
         />
