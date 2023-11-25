@@ -1,6 +1,7 @@
 import SignUp from "@/components/SignUp";
 import React, { useState } from "react";
-import Otp from "./otp";
+import Otp from "../../components/Otp";
+import Header from "@/components/Header";
 function Register() {
   const [otpValues, setOtpValues] = useState();
   const [IsRegistered, setIsRegistered] = useState(false);
@@ -9,15 +10,24 @@ function Register() {
     setOtpValues(values);
   };
   return (
-    <div className="h-screen flex flex-col justify-center">
-      {IsRegistered ? (
-        <Otp
-          email={otpValues.email}
-          verificationKey={otpValues.verificationKey}
-        />
-      ) : (
-        <SignUp handleComponent={ComponentHandler} />
-      )}
+    <div>
+      <img
+        src="/images/auth-bg.png"
+        className="md:hidden block w-screen object-cover absolute "
+        alt="Header Background"
+      />
+
+      <Header navLink="/auth/" navText="Login" />
+      <div className="h-screen flex flex-col justify-center">
+        {IsRegistered ? (
+          <Otp
+            email={otpValues.email}
+            verificationKey={otpValues.verificationKey}
+          />
+        ) : (
+          <SignUp handleComponent={ComponentHandler} />
+        )}
+      </div>
     </div>
   );
 }

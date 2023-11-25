@@ -1,98 +1,22 @@
-import baseurl from "@/config/host";
-import userReducer from "@/reducers/userReducer";
-import Cookies from "js-cookie";
+import Header from "@/components/Header";
+import Login from "@/components/Login";
 import Link from "next/link";
-import Router from "next/router";
-import React, { useReducer, useState } from "react";
+import React from "react";
 
-function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const initialUserState = {};
-
-  const [UserState, dispatch] = useReducer(userReducer, initialUserState);
-
-  const UpdateUserData = (dispatch, user) => {
-    // Dispatch an action to update user data
-    Object.keys(user).forEach((field) => {
-      dispatch({
-        type: "UPDATE_USER_DATA",
-        field,
-        value: user[field]
-      });
-    });
-  };
-
-  const HandleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(`${baseurl}/signin`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
-      });
-      const data = await res.json();
-      if (res.ok) {
-        console.log("Logged in Sucessfully");
-        Cookies.set("token", data.data.token.accesstoken);
-        UpdateUserData(dispatch, data.data.user);
-        Router.push({
-          pathname: "/admin/"
-        });
-      } else {
-        console.log(data.mesage);
-      }
-    } catch (error) {
-      console.log(error);
-      alert("An error occured. Check your internet connection and try again");
-    }
-  };
+function LoginPage() {
   return (
-    <div className="h-screen flex flex-col justify-center">
-      <form
-        onSubmit={HandleSubmit}
-        className="mx-auto md:w-9/12 px-5 py-10 space-y-5 text-xl text-center"
-      >
-        <div className=" mx-auto w-10/12 [&>*]:block [&>*]:my-4">
-          <label>Email</label>
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            className="mx-auto w-10/12 px-5 focus:outline-none text-black"
-          />
-        </div>
-        <div className=" mx-auto w-10/12 [&>*]:block [&>*]:my-4">
-          <label>Password</label>
-          <input
-            type="password"
-            required
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            className="mx-auto w-10/12 px-5 focus:outline-none text-black"
-          />
-        </div>
-        <input
-          type="Submit"
-          className="py-2 px-10 font-semibold cursor-pointer bg-white text-black"
-        />
-        <p>
-          Don&apos;t have an account?
-          <Link href="/auth/register" className="text-blue-500 underline">
-            &nbsp;Sign Up
-          </Link>
-        </p>
-      </form>
+    <div>
+      <img
+        src="/images/auth-bg.png"
+        className="w-screen object-cover absolute "
+        alt="Header Background"
+      />
+      <Header navLink="/auth/register" navText="Sign up" />
+      <div className="h-screen flex flex-col justify-center">
+        <Login />
+      </div>
     </div>
   );
 }
 
-export default Login;
+export default LoginPage;

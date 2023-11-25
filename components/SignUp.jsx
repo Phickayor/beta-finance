@@ -46,54 +46,52 @@ function SignUp(props) {
     // }
   };
   return (
-    <form
-      onSubmit={HandleSubmit}
-      className="mx-auto md:w-9/12 px-5 py-10 space-y-5 text-xl text-center"
-    >
-      <div className="[&>*]:block [&>*]:my-4">
-        <label>Your Business Name</label>
+    <div className="relative bg-white mx-auto w-11/12 md:w-10/12 space-y-8 px-5 py-10 text-xl text-center">
+      <h1 className="text-2xl font-poppins-semibold ">Create an account 📑</h1>
+      <form
+        onSubmit={HandleSubmit}
+        className=" mx-auto w-10/12 [&>*]:block space-y-8 font-poppins-light"
+      >
         <input
           type="text"
           name="business_name"
           required
+          placeholder="Business name"
           value={formState.business_name}
           onChange={(e) => HandleContentChange(e)}
-          className="px-5 w-full focus:outline-none text-black"
+          className="py-2 px-5 w-full text-xl focus:outline-none border border-black placeholder:text-black black text-black"
         />
-      </div>
-      <div className="[&>*]:block [&>*]:my-4">
-        <label>Email</label>
         <input
           type="email"
+          placeholder="Email"
           name="email"
           required
           value={formState.email}
           onChange={(e) => HandleContentChange(e)}
-          className="px-5 w-full focus:outline-none text-black"
+          className="w-full border border-black py-2 px-5 text-xl focus:outline-none placeholder:text-black text-black"
         />
-      </div>
-      <div className="[&>*]:block [&>*]:my-4">
-        <label>Password</label>
         <input
           type="password"
-          name="pswd"
+          placeholder="Password"
+          name="password"
           required
           value={formState.pswd}
           onChange={(e) => HandleContentChange(e)}
-          className="px-5 w-full focus:outline-none text-black"
+          className="w-full border border-black py-2 px-5 text-xl focus:outline-none placeholder:text-black text-black"
+        />{" "}
+        <input
+          type="Submit"
+          value="SIGN UP"
+          className="hover:scale-105 rounded-md mx-auto py-2 px-20 text-xl cursor-pointer bg-purple text-white"
         />
-      </div>
-      <input
-        type="Submit"
-        className="py-2 px-10 font-semibold cursor-pointer bg-white text-black"
-      />
+      </form>
       <p>
-        Already have an account?
-        <Link href="/auth/" className="text-blue-500 underline">
-          &nbsp;Login
+        Don&apos;t have an account?
+        <Link href="/auth/" className="text-purple font-poppins-semibold">
+          &nbsp;LOGIN
         </Link>
       </p>
-    </form>
+    </div>
   );
 }
 

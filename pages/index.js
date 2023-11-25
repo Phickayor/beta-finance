@@ -16,11 +16,10 @@ export default function Home() {
       />
       <img
         src="/images/mobile-header-bg.png"
-        className="md:hidden block object-cover absolute "
+        className="md:hidden block object-cover absolute w-full "
         alt="Header Background"
-      />
-      <Header />
-
+      />{" "}
+      <Header navLink="/auth/" navText="sign in" />
       <div className="relative">
         <Hero />
         <div className="mx-auto w-11/12">
