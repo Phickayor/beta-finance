@@ -59,26 +59,27 @@ function AddInvoice(props) {
         <span className="text-right font-semibold">
           {ItemsNumber} item(s) added
         </span>
+        <div className="grid grid-cols-2">
+          <input
+            type="text"
+            name="invoiceName"
+            onChange={(e) => setInvoiceName(e.target.value)}
+            required
+            placeholder="Invoice name"
+            value={InvoiceName}
+            className="border-b col-span-2 py-2 focus:outline-none focus:border-purple"
+          />
 
-        <input
-          type="text"
-          name="invoiceName"
-          value={InvoiceName}
-          onChange={(e) => setInvoiceName(e.target.value)}
-          required
-          placeholder="Invoice name"
-          className="border-b py-2 focus:outline-none focus:border-purple"
-        />
-
-        <input
-          type="date"
-          name="date purchased"
-          placeholder="Date Purchased"
-          value={DatePurchased}
-          onChange={(e) => setDatePurchased(e.target.value)}
-          required
-          className="bg-inherit w-full border-b py-2 focus:outline-none focus:border-purple"
-        />
+          <input
+            type="date"
+            name="date purchased"
+            placeholder="Date Purchased"
+            value={DatePurchased}
+            onChange={(e) => setDatePurchased(e.target.value)}
+            required
+            className="bg-inherit col-span-2 w-full border-b py-2 focus:outline-none focus:border-purple"
+          />
+        </div>
 
         <div className="grid grid-cols-2 gap-5">
           <input
