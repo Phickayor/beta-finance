@@ -60,26 +60,25 @@ function AddInvoice(props) {
           {ItemsNumber} item(s) added
         </span>
 
-        <div className="grid grid-cols-2 gap-5">
-          <input
-            type="text"
-            name="invoiceName"
-            value={InvoiceName}
-            onChange={(e) => setInvoiceName(e.target.value)}
-            required
-            placeholder="Invoice name"
-            className="border-b py-2 focus:outline-none focus:border-purple"
-          />
-          <input
-            type="date"
-            placeholder="Date Purchased"
-            name="date purchased"
-            value={DatePurchased}
-            onChange={(e) => setDatePurchased(e.target.value)}
-            required
-            className="border-b py-2 focus:outline-none focus:border-purple"
-          />
-        </div>
+        <input
+          type="text"
+          name="invoiceName"
+          value={InvoiceName}
+          onChange={(e) => setInvoiceName(e.target.value)}
+          required
+          placeholder="Invoice name"
+          className="border-b py-2 focus:outline-none focus:border-purple"
+        />
+
+        <input
+          type="date"
+          name="date purchased"
+          placeholder="Date Purchased"
+          value={DatePurchased}
+          onChange={(e) => setDatePurchased(e.target.value)}
+          required
+          className="border-b py-2 focus:outline-none focus:border-purple"
+        />
 
         <div className="grid grid-cols-2 gap-5">
           <input
@@ -88,7 +87,7 @@ function AddInvoice(props) {
             placeholder="Item Name"
             name="itemName"
             required
-            className="border rounded-lg p-4 focus:outline-none focus:border-purple"
+            className="border p-2 md:p-4 focus:outline-none focus:border-purple"
           />
           <input
             ref={amountContainer}
@@ -96,19 +95,19 @@ function AddInvoice(props) {
             placeholder="Amount (₦)"
             name="amount"
             required
-            className="border p-4 rounded-lg focus:outline-none focus:border-purple"
+            className="border p-2 md:p-4 focus:outline-none focus:border-purple"
           />
         </div>
-        <div className=" p-5 flex flex-col md:flex-row justify-between gap-5">
+        <div className=" md:p-5 flex justify-between gap-5">
           <button
             type="submit"
-            className="bg-purple order-2 md:order-1 font-poppins-light text-white rounded-md md:self-center py-2 md:py-3 px-5"
+            className="bg-purple font-poppins-light text-white rounded-md md:self-center py-2 md:py-3 px-5"
           >
             Create Invoice
           </button>
           <button
             onClick={AddItem}
-            className="bg-black order-1 md:order-2 font-poppins-light text-white rounded-md self-center py-2 md:py-3 px-5"
+            className="bg-black font-poppins-light text-white rounded-md self-center py-2 md:py-3 px-5"
           >
             Add Item
           </button>
