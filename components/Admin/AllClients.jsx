@@ -8,7 +8,7 @@ function AllClients(props) {
 
   function OpenClient(event) {
     Router.push({
-      pathname: `/clients/${event}`
+      pathname: `/admin/clients/${event}`
     });
   }
 
@@ -55,9 +55,12 @@ function AllClients(props) {
           </div>
         </div>
       ))} */}
-      <div className="bg-white px-3 md:px-6 p-6 rounded-lg flex justify-between gap-2">
+      <div
+        onClick={() => OpenClient("Garan")}
+        className="bg-white px-3 md:px-6 p-6 rounded-lg flex justify-between gap-2"
+      >
         <div className="self-center">
-          <h1 className="md:text-lg font-poppins-semibold">Alpha Empire</h1>
+          <h1 className="md:text-lg font-poppins-semibold">Garan Isaac</h1>
         </div>
         <div className="self-center">
           <h3 className="md:text-lg font-poppins-semibold">Invoice 📑</h3>
