@@ -77,7 +77,7 @@ function AddInvoice(props) {
           value={DatePurchased}
           onChange={(e) => setDatePurchased(e.target.value)}
           required
-          className="border-b py-2 focus:outline-none focus:border-purple"
+          className="bg-inherit w-full border-b py-2 focus:outline-none focus:border-purple"
         />
 
         <div className="grid grid-cols-2 gap-5">
