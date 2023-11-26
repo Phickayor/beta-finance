@@ -1,23 +1,12 @@
 import baseurl from "@/config/host";
-import authReducer from "@/reducers/AuthReducer";
-import userReducer from "@/reducers/userReducer";
 import Link from "next/link";
 import Router from "next/router";
-import React, { useEffect, useReducer, useState } from "react";
-import { initialUserState } from "./InitialUser";
-import { initialTokenState } from "./initialAuth";
+import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const [UserState, UserDispatch] = useReducer(userReducer, initialUserState);
-  const [AuthState, AuthDispatch] = useReducer(authReducer, initialTokenState);
-
-  useEffect(() => {
-    console.log(UserState); // Log the updated state
-  }, [UserState]);
 
   const HandleSubmit = async (e) => {
     e.preventDefault();

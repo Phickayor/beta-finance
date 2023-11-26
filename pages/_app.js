@@ -1,24 +1,15 @@
-import { VerifyToken } from "@/components/TokenVerification";
-import AuthContext, { AuthProvider } from "@/contexts/AuthContext";
-import authReducer from "@/reducers/AuthReducer";
 import "@/styles/globals.css";
-import { useEffect, useReducer } from "react";
+import Cookies from "js-cookie";
 
 export default function App({ Component, pageProps }) {
-  var initialState = {
-    isAuthorized: false
-  };
-  const [state, dispatch] = useReducer(authReducer, initialState);
-  // // useEffect(() => {
-  // VerifyToken();
-  // // }, [state]);
+  const AuthState = JSON.parse(Cookies.get("token"));
 
   if (Component.protected) {
-    return (
-      <AuthContext.Provider value={{ state, dispatch }}>
-        <Component {...pageProps} />
-      </AuthContext.Provider>
-    );
+    if (!AuthState.accesstoken) {
+      RedirectToLogin();
+    } else {
+      return <Component {...pageProps} />;
+    }
   } else {
     return <Component {...pageProps} />;
   }
