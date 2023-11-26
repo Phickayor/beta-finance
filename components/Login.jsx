@@ -1,28 +1,23 @@
 import baseurl from "@/config/host";
+import authReducer from "@/reducers/AuthReducer";
 import userReducer from "@/reducers/userReducer";
-import Cookies from "js-cookie";
 import Link from "next/link";
 import Router from "next/router";
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
+import { initialUserState } from "./InitialUser";
+import { initialTokenState } from "./initialAuth";
+import Cookies from "js-cookie";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const initialUserState = {};
+  const [UserState, UserDispatch] = useReducer(userReducer, initialUserState);
+  const [AuthState, AuthDispatch] = useReducer(authReducer, initialTokenState);
 
-  const [UserState, dispatch] = useReducer(userReducer, initialUserState);
-
-  const UpdateUserData = (dispatch, user) => {
-    // Dispatch an action to update user data
-    Object.keys(user).forEach((field) => {
-      dispatch({
-        type: "UPDATE_USER_DATA",
-        field,
-        value: user[field]
-      });
-    });
-  };
+  useEffect(() => {
+    console.log(UserState); // Log the updated state
+  }, [UserState]);
 
   const HandleSubmit = async (e) => {
     e.preventDefault();
@@ -36,20 +31,19 @@ function Login() {
       });
       const data = await res.json();
       if (res.ok) {
-        console.log("Logged in Sucessfully");
-        Cookies.set("token", data.data.token.accesstoken);
-        UpdateUserData(dispatch, data.data.user);
-        Router.push({
-          pathname: "/admin/"
-        });
+        alert("Logged in Sucessfully");
+        Cookies.set("token", JSON.stringify(data.data.token));
+        Cookies.set("user", JSON.stringify(data.data.user));
+        Router.push("/admin/");
       } else {
-        console.log(data.mesage);
+        alert(data.message);
       }
     } catch (error) {
       console.log(error);
       alert("An error occured. Check your internet connection and try again");
     }
   };
+
   return (
     <div className="rounded-md relative bg-white mx-auto w-11/12 md:w-10/12 lg:w-9/12 space-y-8 px-5 py-10 text-center">
       <h1 className="text-xl md:text-2xl lg:text-3xl font-poppins-semibold ">
@@ -81,7 +75,7 @@ function Login() {
         />
         <input
           type="Submit"
-          value="Login"
+          defaultValue="Login"
           className="rounded-md hover:scale-105 duration-300 mx-auto md:py-4 py-2 px-20 text-lg md:text-xl lg:text-2xl cursor-pointer bg-purple text-white"
         />
       </form>

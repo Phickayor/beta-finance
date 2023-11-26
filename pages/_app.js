@@ -9,9 +9,9 @@ export default function App({ Component, pageProps }) {
     isAuthorized: false
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
-  // useEffect(() => {
-  VerifyToken();
-  // }, [state]);
+  // // useEffect(() => {
+  // VerifyToken();
+  // // }, [state]);
 
   if (Component.protected) {
     return (

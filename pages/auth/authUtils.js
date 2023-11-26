@@ -1,14 +1,11 @@
 // authUtils.js
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import React from "react";
 
-function RedirectToLogin() {
-  const router = useRouter();
+export function RedirectToLogin() {
   if (typeof window !== "undefined") {
-    router.push({
+    Router.push({
       pathname: "/auth"
     });
   }
 }
-
-export default RedirectToLogin;

@@ -10,6 +10,13 @@ const authReducer = (state, action) => {
         ...state,
         isAuthorized: false
       };
+    case "SET_TOKENS":
+      return {
+        ...state,
+        ...action.payload
+      };
+    default:
+      return state;
   }
 };
 export default authReducer;
