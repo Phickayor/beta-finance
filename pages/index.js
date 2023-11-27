@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import HowItWorks from "@/components/HowItWorks";
@@ -11,7 +10,7 @@ export default function Home() {
     <main className="bg-[#FDD8DC] min-h-screen relative">
       <img
         src="/images/header-bg.png"
-        className="hidden md:block absolute object-cover"
+        className="hidden md:block absolute object-cover w-full"
         alt="Header Background"
       />
       <img

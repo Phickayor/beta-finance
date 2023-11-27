@@ -1,13 +1,13 @@
+import baseurl from "@/config/host";
 import clientReducer from "@/reducers/clientReducer";
 import React, { useReducer } from "react";
 import { toast } from "react-toastify";
 
-function AddClient() {
+function AddClient(props) {
   const initialClientState = {
     email: "",
     phoneNumber: "",
-    fullName: "",
-    businessName: ""
+    fullName: ""
   };
   const [clientState, dispatch] = useReducer(clientReducer, initialClientState);
   const HandleContentChange = (e) => {
@@ -16,20 +16,33 @@ function AddClient() {
       value: e.target.value
     });
   };
-  const AddCustomer = async () => {
+  const ContentChange = (field, value) => {
+    dispatch({
+      field: field,
+      value: value
+    });
+  };
+  const AddCustomer = async (e) => {
+    e.preventDefault();
     try {
       const res = await fetch(`${baseurl}/client/add`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          authorization: `Bearer ${props.accesstoken}`
         },
         body: JSON.stringify({ ...clientState })
       });
       const data = await res.json();
-      res.ok ? toast.success(data.message) : toast.error(data.message);
+      res.ok
+        ? (toast.success(data.message),
+          ContentChange("phoneNumber", ""),
+          ContentChange("email", ""),
+          ContentChange("fullName", ""))
+        : toast.error(data.message);
     } catch (error) {
       console.log(error);
-      toast.error(`Error: ${error}`);
+      toast.error(`Error: ${error.message}`);
     }
   };
   return (
@@ -39,15 +52,6 @@ function AddClient() {
         onSubmit={AddCustomer}
         className="bg-white md:text-xl font-poppins-light flex flex-col gap-5 p-5 rounded-lg"
       >
-        <input
-          type="text"
-          name="businessName"
-          required
-          placeholder="Business name"
-          value={clientState.businessName}
-          onChange={(e) => HandleContentChange(e)}
-          className="border-b py-2 focus:outline-none focus:border-purple"
-        />
         <input
           type="text"
           placeholder="Full name"
@@ -76,8 +80,8 @@ function AddClient() {
           className="border-b py-2 focus:outline-none focus:border-purple"
         />
         <input
-          type="Submit"
-          value="Add"
+          type="submit"
+          defaultValue="Add"
           className="rounded-md hover:scale-105 duration-300 py-2 px-10 w-fit text-lg md:text-xl lg:text-2xl cursor-pointer bg-purple text-white"
         />
       </form>

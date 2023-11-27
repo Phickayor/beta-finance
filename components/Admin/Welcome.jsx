@@ -7,7 +7,9 @@ function Welcome(props) {
       <h1 className="text-xl md:text-2xl font-poppins-light">
         Welcome {props.name} ✌️
       </h1>
-      <p className="text-3xl md:text-5xl font-poppins-semibold">₦{props.balance}.00</p>
+      <p className="text-3xl md:text-5xl font-poppins-semibold">
+        ₦{props.balance}.00
+      </p>
       <div className="flex justify-center gap-5 md:gap-8 lg:gap-10 action-btn-parents text-lg md:text-xl lg:text-2xl py-4">
         <Link href="/admin/clients">Customers</Link>
         <Link href="/admin/withdraw">Withdraw</Link>

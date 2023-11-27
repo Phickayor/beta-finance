@@ -1,16 +1,31 @@
 import Header from "@/components/Header";
 import Otp from "@/components/Otp";
 import { ResendOtp } from "@/components/ResendOtp";
+import RedirectToLogin from "@/components/authUtils";
 import Cookies from "js-cookie";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 function Verify() {
-  var router = useRouter();
-
   var email = Cookies.get("email");
-  var verificationKey = Cookies.get("verificationKey");
+  const [otpValues, setOtpValues] = useState({ email });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let { data } = await ResendOtp(email);
+        setOtpValues(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [email]); // Only depend on email in the dependency array
+
+  // Log otpValues after it's updated (useEffect runs after each render)
+  useEffect(() => {
+    console.log(otpValues);
+  }, [otpValues]);
 
   return (
     <>
@@ -26,7 +41,14 @@ function Verify() {
       />
       <Header navLink="/auth/" navText="Login" />
       <div className="h-screen flex flex-col justify-center">
-        <Otp email={email} verificationKey={verificationKey} />
+        {email ? (
+          <Otp
+            email={otpValues.email}
+            verificationKey={otpValues.verificationKey}
+          />
+        ) : (
+          RedirectToLogin()
+        )}
       </div>
     </>
   );
