@@ -41,7 +41,7 @@ function AllInvoices(props) {
         INVOICES({invoicesNumber})
       </h1>
       {/* Commenting till i can access server */}
-      {invoices ? (
+      {invoices > 0 ? (
         invoices.map((invoice, index) => (
           <div
             key={index}
