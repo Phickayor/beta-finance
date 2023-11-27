@@ -7,6 +7,8 @@ function AllInvoices(props) {
   const [invoices, setInvoices] = useState([]);
   const [invoicesNumber, setInvoicesNumber] = useState(0);
 
+  console.log(props)
+
   function OpenInvoice(event) {
     Router.push({
       pathname: `/admin/invoice/${event}`
@@ -15,7 +17,7 @@ function AllInvoices(props) {
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
-        const res = await fetch(`${baseurl}/client/${props.ClientId}`, {
+        const res = await fetch(`${baseurl}/client/${props?.clientId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
