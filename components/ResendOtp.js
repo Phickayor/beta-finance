@@ -1,4 +1,5 @@
 import baseurl from "@/config/host";
+import { toast } from "react-toastify";
 
 export const ResendOtp = async (email) => {
   try {
@@ -11,12 +12,14 @@ export const ResendOtp = async (email) => {
     });
     const data = await res.json();
     if (data.success) {
+      toast.success(data.message);
       return {
         message: data.message,
         data,
         success: true
       };
     } else {
+      toast.error(data.message);
       return {
         message: data.message,
         success: false

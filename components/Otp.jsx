@@ -1,6 +1,7 @@
 import baseurl from "@/config/host";
 import React, { useRef, useState } from "react";
 import { ResendOtp } from "./ResendOtp";
+import { toast } from "react-toastify";
 
 function Otp(props) {
   const [values, setValues] = useState({
@@ -30,8 +31,8 @@ function Otp(props) {
   const HandleNewOtp = async () => {
     const { message, data, success } = await ResendOtp(values.email);
     success
-      ? (setValues(data), alert(message))
-      : alert("Couldn't resend Verification code. Try again");
+      ? (setValues(data), toast.success(message))
+      : toast.error("Couldn't resend Verification code. Try again");
   };
   const HandleVerification = async () => {
     setOtp(otpValues.join(""));
@@ -44,16 +45,16 @@ function Otp(props) {
         body: JSON.stringify({ ...values, otp })
       });
       const data = await res.json();
-      alert(data.message);
       if (data.success) {
+        toast.success(data.message);
         Router.push({
           pathname: "/auth/login"
         });
+      } else {
+        toast.warning(data.message);
       }
     } catch (error) {
-      alert(
-        "An error occured while verifying mail. check your internet connection and try again."
-      );
+      toast.error(`Error: ${error.message}`);
     }
   };
   return (

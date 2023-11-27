@@ -3,6 +3,7 @@ import Link from "next/link";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -20,19 +21,19 @@ function Login() {
       });
       const data = await res.json();
       if (res.ok) {
-        alert("Logged in Sucessfully");
+        toast.success("Logged in Sucessfully");
         Cookies.set("token", JSON.stringify(data.data.token));
         Cookies.set("user", JSON.stringify(data.data.user));
         Router.push("/admin/");
       } else if (data.message === "Email not Verified") {
-        alert(data.message);
+        toast.warning(data.message);
         Router.push({ pathname: "/auth/verify", query: { email } });
       } else {
-        alert(data.message);
+        toast.error(data.message);
       }
     } catch (error) {
       console.log(error);
-      alert("An error occured. Check your internet connection and try again");
+      toast.error(`Error: ${error.message}`);
     }
   };
 

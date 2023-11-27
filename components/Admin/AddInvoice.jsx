@@ -1,5 +1,6 @@
 import baseurl from "@/config/host";
 import React, { useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 function AddInvoice(props) {
   const [Items, setItems] = useState([]);
@@ -16,9 +17,9 @@ function AddInvoice(props) {
     };
     console.log(item);
     if ((item.name || item.amount) === "") {
-      alert("Item name and amount is required");
+      toast.warning("Item name and amount is required");
     } else {
-      alert("One item added to invoice");
+      toast.success("One item added to invoice");
       Items.push(item);
       setItemsNumber(Items.length);
       var newTotal = parseInt(Total + item.amount);
@@ -38,11 +39,11 @@ function AddInvoice(props) {
       });
       const data = await res.json();
       data.success
-        ? alert("Invoice created Successfully")
-        : alert("We encountered an issue, Try again ");
+        ? toast.success("Invoice created Successfully")
+        : toast.error("We encountered an issue, Try again ");
     } catch (error) {
       console.log(error);
-      alert("Check your internet connection and try again");
+      toast.error("Check your internet connection and try again");
     }
     setInvoiceName("");
     setDatePurchased("");

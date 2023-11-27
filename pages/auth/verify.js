@@ -12,9 +12,8 @@ function Verify() {
   });
   var email = router.query.email;
   const HandleResendOtp = async (email) => {
-    var { data, message } = await ResendOtp(email);
+    var { data } = await ResendOtp(email);
     SetOtpValues(data);
-    alert(message);
   };
   useEffect(() => {
     if (email) {

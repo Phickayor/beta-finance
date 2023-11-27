@@ -2,6 +2,7 @@ import baseurl from "@/config/host";
 import formReducer from "@/reducers/formReducer";
 import Link from "next/link";
 import React, { useReducer } from "react";
+import { toast } from "react-toastify";
 
 function SignUp(props) {
   const initialFormState = {
@@ -28,14 +29,14 @@ function SignUp(props) {
       });
       const data = await res.json();
       if (res.ok) {
-        alert(data.message);
+        toast.success(data.message);
         props.handleComponent("registered", data.data);
       } else {
-        alert(data.mesage);
+        toast.error(data.mesage);
       }
     } catch (error) {
       console.log(error);
-      alert(error.message);
+      toast.error(`Error: ${error.message}`);
     }
   };
   return (

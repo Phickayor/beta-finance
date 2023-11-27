@@ -1,5 +1,6 @@
 import clientReducer from "@/reducers/clientReducer";
 import React, { useReducer } from "react";
+import { toast } from "react-toastify";
 
 function AddClient() {
   const initialClientState = {
@@ -25,10 +26,10 @@ function AddClient() {
         body: JSON.stringify({ ...clientState })
       });
       const data = await res.json();
-      alert(data.message);
+      res.ok ? toast.success(data.message) : toast.error(data.message);
     } catch (error) {
       console.log(error);
-      alert(error);
+      toast.error(`Error: ${error}`);
     }
   };
   return (
