@@ -1,8 +1,9 @@
 import { bankCodeData } from "@/config/BankCodes";
+import { ErrorFunction } from "@/config/checkerror";
 import baseurl from "@/config/host";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import { Router } from "next/router";
+import  Router  from "next/router";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 // import "@/styles/global.css"
@@ -15,7 +16,7 @@ function WithdrawComp() {
   const [loading, setLoading] = useState(false)
   const [allBankCode, setAllBankCode] = useState([])
 
-  const token = JSON.parse(Cookies.get("token"))
+  const token = Cookies.get("token")? JSON.parse(Cookies.get("token")) : ""
 
   console.log(token.accesstoken)
 

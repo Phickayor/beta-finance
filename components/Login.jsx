@@ -41,8 +41,9 @@ function Login() {
           icon: "success",
           showConfirmButton: false,
         }).then(() => {
-          Cookies.set("token", JSON.stringify(data.data.token));
-          Cookies.set("user", JSON.stringify(data.data.user));
+          Cookies.set("token", JSON.stringify(data?.data?.token), {expires: 2});
+          Cookies.set("user", JSON.stringify(data?.data?.user), {expires:2});
+         
           Router.push("/admin");
         });
       } else {

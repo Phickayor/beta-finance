@@ -36,7 +36,7 @@ function AllClients(props) {
   return (
     <div className="mx-auto lg:w-11/12 flex flex-col gap-4">
       <h1 className="text-xl font-poppins-semibold">
-        Customers ({ClientsNumber})
+        Customers ({Clients?.length})
       </h1>
       {/* Commenting till i can access server */}
       {Clients ? (
