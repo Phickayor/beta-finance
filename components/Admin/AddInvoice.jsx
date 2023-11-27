@@ -1,41 +1,23 @@
 import baseurl from "@/config/host";
+import Cookies from "js-cookie";
 import React, { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 function AddInvoice(props) {
-  const [Items, setItems] = useState([]);
-  const [ItemsNumber, setItemsNumber] = useState(0);
-  const [InvoiceName, setInvoiceName] = useState("");
-  const [Total, setTotal] = useState(0);
+  const token = Cookies.get("token");
+  const [productName, setproductName] = useState("");
+  const [Total, setTotal] = useState("");
   const [DatePurchased, setDatePurchased] = useState("");
-  const itemContainer = useRef(null);
-  const amountContainer = useRef(null);
-  const AddItem = () => {
-    var item = {
-      name: itemContainer.current.value,
-      amount: parseInt(amountContainer.current.value)
-    };
-    console.log(item);
-    if ((item.name || item.amount) === "") {
-      toast.warning("Item name and amount is required");
-    } else {
-      toast.success("One item added to invoice");
-      Items.push(item);
-      setItemsNumber(Items.length);
-      var newTotal = parseInt(Total + item.amount);
-      setTotal(newTotal);
-    }
-    itemContainer.current.value = "";
-    amountContainer.current.value = "";
-  };
+
   const CreateInvoice = async () => {
     try {
       const res = await fetch(`${baseurl}/create/${props.clientId}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          authorization: `Bearer ${token.accesstoken}`
         },
-        body: JSON.stringify({ InvoiceName, DatePurchased, Items, Total })
+        body: JSON.stringify({ productName, DatePurchased, Items, Total })
       });
       const data = await res.json();
       data.success
@@ -45,31 +27,35 @@ function AddInvoice(props) {
       console.log(error);
       toast.error("Check your internet connection and try again");
     }
-    setInvoiceName("");
+    setproductName("");
     setDatePurchased("");
-    itemContainer.current.value = "";
-    amountContainer.current.value = "";
+    setTotal("");
   };
   return (
     <div className="space-y-4 mx-auto lg:w-11/12">
-      <h1 className="text-xl font-poppins-semibold">GARAN ISAAC</h1>
+      <h1 className="text-xl font-poppins-semibold">{props.clientName}</h1>
       <form
         onSubmit={CreateInvoice}
         className="bg-white md:text-xl font-poppins-light flex flex-col gap-6 p-5 lg:p-10 rounded-lg"
       >
-        <span className="text-right font-semibold">
-          {ItemsNumber} item(s) added
-        </span>
         <input
           type="text"
-          name="invoiceName"
-          onChange={(e) => setInvoiceName(e.target.value)}
+          name="productName"
+          onChange={(e) => setproductName(e.target.value)}
           required
-          placeholder="Invoice name"
-          value={InvoiceName}
+          placeholder="Product name"
+          value={productName}
           className="border-b col-span-2 py-2 focus:outline-none focus:border-purple"
         />
-
+        <input
+          type="number"
+          placeholder="Total (₦)"
+          name="total"
+          value={Total}
+          onChange={(e) => setTotal(e.target.value)}
+          required
+          className="border-b p-2 md:p-4 focus:outline-none focus:border-purple"
+        />
         <input
           type="date"
           name="date purchased"
@@ -79,37 +65,12 @@ function AddInvoice(props) {
           required
           className="border-b py-2 focus:outline-none focus:border-purple"
         />
-
-        <div className="grid grid-cols-2 gap-5">
-          <input
-            ref={itemContainer}
-            type="text"
-            placeholder="Item Name"
-            name="itemName"
-            required
-            className="border p-2 md:p-4 focus:outline-none focus:border-purple"
-          />
-          <input
-            ref={amountContainer}
-            type="number"
-            placeholder="Amount (₦)"
-            name="amount"
-            required
-            className="border p-2 md:p-4 focus:outline-none focus:border-purple"
-          />
-        </div>
         <div className=" md:p-5 flex justify-between gap-5">
           <button
-            type="submit"
-            className="bg-purple font-poppins-light text-white rounded-md md:self-center py-2 md:py-3 px-5"
+            onClick={CreateInvoice}
+            className="bg-purple font-poppins-light text-white rounded-md self-center py-2 md:py-3 px-5"
           >
             Create Invoice
-          </button>
-          <button
-            onClick={AddItem}
-            className="bg-black font-poppins-light text-white rounded-md self-center py-2 md:py-3 px-5"
-          >
-            Add Item
           </button>
         </div>
       </form>

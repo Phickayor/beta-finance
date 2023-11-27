@@ -24,7 +24,9 @@ function AllClients(props) {
         });
         const data = await res.json();
         res.ok
-          ? (console.log(data.data), setClients(data.data))
+          ? (console.log(data.data),
+            setClients(data.data),
+            setClientsNumber(data.data.length))
           : console.log(data.message);
       } catch (error) {
         console.log(error);
