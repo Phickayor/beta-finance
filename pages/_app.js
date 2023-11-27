@@ -24,7 +24,8 @@ export default function App({ Component, pageProps }) {
     if (AuthState.accesstoken) {
       return (
         <>
-          <Component {...pageProps} /> <ToastContainer />
+          <Component {...pageProps} accesstoken={AuthState.accesstoken} />
+          <ToastContainer />
         </>
       );
     } else {

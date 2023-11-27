@@ -15,7 +15,8 @@ function Home() {
   return (
     <div className="py-5 mx-auto w-11/12 space-y-8">
       <Header navText="Add Client" navLink="/admin/clients" />
-      <Welcome name={userState.businessName} balance={userState.userWalllet} />
+      <Welcome name={userState.businessName} balance={userState.userWallet} />
+
       <ActivityBar />
     </div>
   );
