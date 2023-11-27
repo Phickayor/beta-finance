@@ -3,7 +3,7 @@ import Router from "next/router";
 import React, { useEffect, useState } from "react";
 
 function AllClients(props) {
-  const clients = props.clients;
+  const clients = props.clients || 0;
   const [clientsNumber, setClientsNumber] = useState(clients.length);
 
   function OpenClient(event) {

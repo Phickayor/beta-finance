@@ -1,4 +1,4 @@
-// import baseurl from "@/config/host";
+import baseurl from "@/config/host";
 import Link from "next/link";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
@@ -6,72 +6,15 @@ import Cookies from "js-cookie";
 import Swal from "sweetalert2";
 import { ErrorFunction } from "@/config/checkerror";
 
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  let baseurl = "http://localhost:4000";
+  // let baseurl = "http://localhost:4000";
 
-  const HandleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const res = await fetch(`${baseurl}/signin`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: email.toLowerCase(), password }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        alert("Logged in Sucessfully");
-        Cookies.set("token", JSON.stringify(data.data.token));
-        Cookies.set("user", JSON.stringify(data.data.user));
-        Router.push("/admin/");
-      } else if (data?.message === "Email not Verified") {
-        Swal.fire({
-          title: "Email not Verified",
-          text: "Click Ok to Verify Email",
-          timer: "error",
-          showConfirmButton: true,
-        }).then(async () => {
-          const resendOtpResponse = await fetch(`${baseurl}/resend-otp`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: email.toLowerCase() }),
-          });
-
-          const mainResponse = await resendOtpResponse.json();
-
-          if (mainResponse?.success) {
-            const { data } = mainResponse;
-            Router.push({
-              pathname: "/auth/verify",
-              query: {
-                email: data?.email,
-                verificationKey: data?.verificationKey,
-              },
-            });
-          } else {
-            alert("Failed to resend otp");
-          }
-
-          console.log("otp response data", mainResponse);
-        });
-      } else {
-        alert(data?.message);
-      }
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-      alert("An error occured. Check your internet connection and try again");
-    }
-  };
-
+  
   const HandleSumbit1 = async (e) => {
     e.preventDefault();
     try {
@@ -145,6 +88,7 @@ function Login() {
             }); 
           }
         } else {
+          setLoading(false)
           Swal.fire({
             text: "An error occured. Check your internet connection and try again",
             timer: 3500,

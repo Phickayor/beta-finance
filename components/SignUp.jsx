@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useReducer, useState } from "react";
 import Swal from "sweetalert2";
 
+
 function SignUp(props) {
 
   const [loading, setLoading] = useState(false)
@@ -56,6 +57,7 @@ function SignUp(props) {
           showConfirmButton: false
         })
         alert(data.mesage);
+
       }
     } catch (error) {
       setLoading(false)
@@ -67,7 +69,7 @@ function SignUp(props) {
         icon: "error",
         showConfirmButton: false
       })
-      alert(error.message, "error");
+
     }
   };
   return (

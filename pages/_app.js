@@ -1,5 +1,7 @@
 import { NewToken } from "@/components/NewToken";
 import "@/styles/globals.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
 import RedirectToLogin from "../components/authUtils";
 import { useEffect, useState } from "react";
@@ -20,7 +22,11 @@ export default function App({ Component, pageProps }) {
 
   if (Component.protected) {
     if (AuthState.accesstoken) {
-      return <Component {...pageProps} />;
+      return (
+        <>
+          <Component {...pageProps} /> <ToastContainer />
+        </>
+      );
     } else {
       const { success } = HandleRefresh(AuthState.refreshToken);
       console.log(success);
@@ -29,5 +35,10 @@ export default function App({ Component, pageProps }) {
       }
     }
   }
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Component {...pageProps} />
+      <ToastContainer />
+    </>
+  );
 }

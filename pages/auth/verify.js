@@ -11,6 +11,7 @@ function Verify() {
   var email = Cookies.get("email");
   var verificationKey = Cookies.get("verificationKey");
 
+
   return (
     <>
       <img

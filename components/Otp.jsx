@@ -34,8 +34,8 @@ function Otp(props) {
   const HandleNewOtp = async () => {
     const { message, data, success } = await ResendOtp(values.email);
     success
-      ? (setValues(data), alert(message))
-      : alert("Couldn't resend Verification code. Try again");
+      ? (setValues(data), toast.success(message))
+      : toast.error("Couldn't resend Verification code. Try again");
   };
   const HandleVerification = async () => {
     let convertOtpToString = otpValues.join("")
@@ -58,10 +58,9 @@ function Otp(props) {
       });
       const data = await res.json();
 
-      console.log(res)
-      console.log(data)
+      
       // alert(data?.message);
-      if (data?.success) {
+      if (res?.ok) {
 
         Swal.fire({
           title: "Email Verification Completed",
@@ -77,12 +76,26 @@ function Otp(props) {
         })
 
         
+      }else{
+         Swal.fire({
+        text: ErrorFunction(error),
+        timer: 3500,
+        icon: "error",
+        showConfirmButton: false,
+      });
       }
     } catch (error) {
-      console.log("error",error)
-      alert(
-        "An error occured while verifying mail. check your internet connection and try again."
-      );
+      Swal.fire({
+        text:"An error occured while verifying mail. check your internet connection and try again.",
+        timer: 3500,
+        icon: "error",
+        showConfirmButton: true,
+      });
+     
+      // alert(
+      //   "An error occured while verifying mail. check your internet connection and try again."
+      // );
+
     }
   };
   return (
