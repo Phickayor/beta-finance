@@ -9,7 +9,7 @@ function AllInvoices(props) {
 
   function OpenInvoice(event) {
     Router.push({
-      pathname: `/admin/clients/${props.ClientId}/${event}`
+      pathname: `/admin/invoice/${event}`
     });
   }
   useEffect(() => {
@@ -53,7 +53,12 @@ function AllInvoices(props) {
               </h1>
             </div>
             <div className="self-center">
-              <h3 className="md:text-lg font-poppins-semibold">View Invoice</h3>
+
+              <h3 className="md:text-lg font-poppins-semibold"
+              onClick={()=>{
+                OpenInvoice(invoice?._id)
+              }}
+              >View Invoice</h3>
             </div>
           </div>
         ))
