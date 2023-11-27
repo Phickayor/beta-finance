@@ -6,8 +6,8 @@ import { toast } from "react-toastify";
 function AddInvoice(props) {
   const token = Cookies.get("token");
   const [productName, setproductName] = useState("");
-  const [Total, setTotal] = useState("");
-  const [DatePurchased, setDatePurchased] = useState("");
+  const [total, settotal] = useState("");
+  const [purchasedDate, setpurchasedDate] = useState("");
 
   const CreateInvoice = async () => {
     try {
@@ -17,7 +17,7 @@ function AddInvoice(props) {
           "Content-Type": "application/json",
           authorization: `Bearer ${token.accesstoken}`
         },
-        body: JSON.stringify({ productName, DatePurchased, Items, Total })
+        body: JSON.stringify({ productName, purchasedDate, total })
       });
       const data = await res.json();
       data.success
@@ -28,8 +28,8 @@ function AddInvoice(props) {
       toast.error("Check your internet connection and try again");
     }
     setproductName("");
-    setDatePurchased("");
-    setTotal("");
+    setpurchasedDate("");
+    settotal("");
   };
   return (
     <div className="space-y-4 mx-auto lg:w-11/12">
@@ -49,10 +49,10 @@ function AddInvoice(props) {
         />
         <input
           type="number"
-          placeholder="Total (₦)"
+          placeholder="total (₦)"
           name="total"
-          value={Total}
-          onChange={(e) => setTotal(e.target.value)}
+          value={total}
+          onChange={(e) => settotal(e.target.value)}
           required
           className="border-b p-2 md:p-4 focus:outline-none focus:border-purple"
         />
@@ -60,8 +60,8 @@ function AddInvoice(props) {
           type="date"
           name="date purchased"
           placeholder="Date Purchased"
-          value={DatePurchased}
-          onChange={(e) => setDatePurchased(e.target.value)}
+          value={purchasedDate}
+          onChange={(e) => setpurchasedDate(e.target.value)}
           required
           className="border-b py-2 focus:outline-none focus:border-purple"
         />
