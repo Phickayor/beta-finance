@@ -17,20 +17,20 @@ function WithdrawComp() {
 
   const token = JSON.parse(Cookies.get("token"))
 
-  console.log(token)
+  console.log(token.accesstoken)
 
   const makeWithdrawl = async () => {
     try {
       setLoading(true)
       const res = await fetch(`${baseurl}/payment/withdrawal`, {
         method: "POST",
-        headers:{
-          Authorization:`Bearer ${token?.accessToken}`,
+        headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token.accesstoken}`
         },
         body: JSON.stringify({
           accountName,
-          accountNumber: Number(amount),
+          accountNumber: Number(accountNumber),
           bankCode,
           amount: Number(amount)
         })
