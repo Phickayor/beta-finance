@@ -1,9 +1,14 @@
+import { ErrorFunction } from "@/config/checkerror";
 import baseurl from "@/config/host";
 import formReducer from "@/reducers/formReducer";
 import Link from "next/link";
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
+import Swal from "sweetalert2";
 
 function SignUp(props) {
+
+  const [loading, setLoading] = useState(false)
+
   const initialFormState = {
     email: "",
     password: "",
@@ -19,6 +24,7 @@ function SignUp(props) {
   const HandleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const res = await fetch(`${baseurl}/signup`, {
         method: "POST",
         headers: {
@@ -28,24 +34,50 @@ function SignUp(props) {
       });
       const data = await res.json();
       if (res.ok) {
+        setLoading(false)
+        // success message
+        Swal.fire({
+          text:data?.message,
+        timer: 3000,
+        icon: "success",
+        showConfirmButton: false
+        }).then(()=>{
+          props.handleComponent("registered", data.data);
+        })
         alert(data.message);
         props.handleComponent("registered", data.data);
       } else {
+        setLoading(false)
+        console.log(data?.message)
+        Swal.fire({
+          text:data?.message,
+          timer: 3500,
+          icon: "error",
+          showConfirmButton: false
+        })
         alert(data.mesage);
       }
     } catch (error) {
+      setLoading(false)
       console.log(error);
-      alert(error.message);
+      // error message
+      Swal.fire({
+        text: ErrorFunction(error),
+        timer: 3500,
+        icon: "error",
+        showConfirmButton: false
+      })
+      alert(error.message, "error");
     }
   };
   return (
-    <div className="rounded-md relative bg-white mx-auto w-11/12 md:w-10/12 lg:w-9/12 space-y-8 px-5 py-10 text-center">
-      <h1 className="text-xl md:text-2xl lg:text-3xl font-poppins-semibold ">
+    <div className="rounded-md relative bg-white mx-auto w-11/12 md:w-10/12 lg:w-6/12 space-y-8 px-5 py-10 text-center">
+      <h1 className="text-xl text-[18px] md:text-2xl font-poppins-semibold ">
         Create an account 📑
       </h1>
       <form
         onSubmit={HandleSubmit}
-        className=" mx-auto w-11/12 md:w-10/12 [&>*]:block space-y-6 md:space-y-8 lg:space-y-10 font-poppins-light"
+        className=" mx-auto w-11/12 md:w-10/12 [&>*]:block space-y-6 md:space-y-8 lg:space-y-8 font-poppins-light"
       >
         <input
           type="text"
@@ -55,7 +87,7 @@ function SignUp(props) {
           placeholder="Business name"
           value={formState.businessName}
           onChange={(e) => HandleContentChange(e)}
-          className="py-1 md:py-2 lg:py-5 px-2 md:px-5 lg:px-8 w-full text-lg md:text-xl lg:text-2xl focus:outline-none border border-black placeholder:text-black black text-black"
+          className="py-1 md:py-3 py-3 lg:py-3 px-1 md:px-5 lg:px-3 w-full text-[15px] text  rounded-[3px] focus:outline-none border border-black placeholder:text-black black text-black placeholder:text-[16px]"
         />
         <input
           type="email"
@@ -65,7 +97,7 @@ function SignUp(props) {
           required
           value={formState.email}
           onChange={(e) => HandleContentChange(e)}
-          className="py-1 md:py-2 lg:py-5 px-2 md:px-5 lg:px-8 w-full text-lg md:text-xl lg:text-2xl focus:outline-none border border-black placeholder:text-black black text-black"
+          className="py-1 md:py-3 py-3 lg:py-3 px-1 md:px-5 lg:px-3 w-full text-[15px] text  rounded-[3px] focus:outline-none border border-black placeholder:text-black black text-black placeholder:text-[16px]"
         />
         <input
           type="password"
@@ -75,17 +107,19 @@ function SignUp(props) {
           required
           value={formState.pswd}
           onChange={(e) => HandleContentChange(e)}
-          className="py-1 md:py-2 lg:py-5 px-2 md:px-5 lg:px-8 w-full text-lg md:text-xl lg:text-2xl focus:outline-none border border-black placeholder:text-black black text-black"
+          className="py-1 md:py-3 py-3 lg:py-3 px-1 md:px-5 lg:px-3 w-full text-[15px] text  rounded-[3px] focus:outline-none border border-black placeholder:text-black black text-black placeholder:text-[16px]"
         />
         <input
           type="Submit"
-          defaultValue="SIGN UP"
-          className="rounded-md hover:scale-105 duration-300 mx-auto md:py-4 py-2 px-20 text-lg md:text-xl lg:text-2xl cursor-pointer bg-purple text-white"
+          defaultValue={
+            loading? "Loading...": "SIGN UP"
+          }
+          className="rounded-md text-[15px] hover:scale-105 duration-300 mx-auto md:py-3 py-3 px-20  cursor-pointer bg-purple text-white  "
         />
       </form>
-      <p className="text-lg md:text-xl lg:text-2xl ">
+      <p className="text-[17px]">
         Already have an account?
-        <Link href="/auth/" className="text-purple font-poppins-semibold">
+        <Link href="/auth/" className="text-purple text-[13px] font-poppins-semibold ">
           &nbsp;LOGIN
         </Link>
       </p>

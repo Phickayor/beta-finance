@@ -1,26 +1,16 @@
 import Header from "@/components/Header";
 import Otp from "@/components/Otp";
 import { ResendOtp } from "@/components/ResendOtp";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 function Verify() {
   var router = useRouter();
-  const [otpValues, SetOtpValues] = useState({
-    email: "",
-    verificationKey: ""
-  });
-  var email = router.query.email;
-  const HandleResendOtp = async (email) => {
-    var { data, message } = await ResendOtp(email);
-    SetOtpValues(data);
-    alert(message);
-  };
-  useEffect(() => {
-    if (email) {
-      HandleResendOtp(email);
-    }
-  });
+
+  var email = Cookies.get("email");
+  var verificationKey = Cookies.get("verificationKey");
+
   return (
     <>
       <img
@@ -35,10 +25,7 @@ function Verify() {
       />
       <Header navLink="/auth/" navText="Login" />
       <div className="h-screen flex flex-col justify-center">
-        <Otp
-          email={otpValues.email}
-          verificationKey={otpValues.verificationKey}
-        />
+        <Otp email={email} verificationKey={verificationKey} />
       </div>
     </>
   );

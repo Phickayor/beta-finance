@@ -1,8 +1,12 @@
 import baseurl from "@/config/host";
 import React, { useRef, useState } from "react";
 import { ResendOtp } from "./ResendOtp";
+import Swal from "sweetalert2";
 
 function Otp(props) {
+
+ 
+
   const [values, setValues] = useState({
     email: props.email,
     verificationKey: props.verificationKey
@@ -34,23 +38,48 @@ function Otp(props) {
       : alert("Couldn't resend Verification code. Try again");
   };
   const HandleVerification = async () => {
-    setOtp(otpValues.join(""));
+    let convertOtpToString = otpValues.join("")
+
+    console.log("convert otp to string", convertOtpToString)
+
+    setOtp(convertOtpToString);
     try {
+
+      console.log("otp values",otp)
+
+      console.log("verifydata", ...values, convertOtpToString )
+
       const res = await fetch(`${baseurl}/verify-email`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ ...values, otp })
+        body: JSON.stringify({ ...values, otp:convertOtpToString  })
       });
       const data = await res.json();
-      alert(data.message);
-      if (data.success) {
-        Router.push({
+
+      console.log(res)
+      console.log(data)
+      // alert(data?.message);
+      if (data?.success) {
+
+        Swal.fire({
+          title: "Email Verification Completed",
+          timer: 3500,
+          icon: "success",
+          showConfirmButton: false,
+        }).then(()=>{
+          Router.push({
           pathname: "/auth/login"
         });
+        Cookies.remove("email")
+        Cookies.remove("verificationKey")
+        })
+
+        
       }
     } catch (error) {
+      console.log("error",error)
       alert(
         "An error occured while verifying mail. check your internet connection and try again."
       );

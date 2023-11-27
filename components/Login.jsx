@@ -1,22 +1,28 @@
-import baseurl from "@/config/host";
+// import baseurl from "@/config/host";
 import Link from "next/link";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
+import { ErrorFunction } from "@/config/checkerror";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  let baseurl = "http://localhost:4000";
 
   const HandleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await fetch(`${baseurl}/signin`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email: email.toLowerCase(), password }),
       });
       const data = await res.json();
       if (res.ok) {
@@ -24,15 +30,137 @@ function Login() {
         Cookies.set("token", JSON.stringify(data.data.token));
         Cookies.set("user", JSON.stringify(data.data.user));
         Router.push("/admin/");
-      } else if (data.message === "Email not Verified") {
-        alert(data.message);
-        Router.push({ pathname: "/auth/verify", query: { email } });
+      } else if (data?.message === "Email not Verified") {
+        Swal.fire({
+          title: "Email not Verified",
+          text: "Click Ok to Verify Email",
+          timer: "error",
+          showConfirmButton: true,
+        }).then(async () => {
+          const resendOtpResponse = await fetch(`${baseurl}/resend-otp`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: email.toLowerCase() }),
+          });
+
+          const mainResponse = await resendOtpResponse.json();
+
+          if (mainResponse?.success) {
+            const { data } = mainResponse;
+            Router.push({
+              pathname: "/auth/verify",
+              query: {
+                email: data?.email,
+                verificationKey: data?.verificationKey,
+              },
+            });
+          } else {
+            alert("Failed to resend otp");
+          }
+
+          console.log("otp response data", mainResponse);
+        });
       } else {
-        alert(data.message);
+        alert(data?.message);
       }
     } catch (error) {
+      setLoading(false);
       console.log(error);
       alert("An error occured. Check your internet connection and try again");
+    }
+  };
+
+  const HandleSumbit1 = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const res = await fetch(`${baseurl}/signin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email.toLowerCase(), password }),
+      });
+
+      const data = await res.json();
+
+      console.log(res, "res response");
+
+      console.log("data response", data);
+
+      if (res?.ok) {
+        setLoading(false)
+        Swal.fire({
+          title: data?.message,
+          timer: 3500,
+          icon: "success",
+          showConfirmButton: false,
+        }).then(() => {
+          Cookies.set("token", JSON.stringify(data.data.token));
+          Cookies.set("user", JSON.stringify(data.data.user));
+          Router.push("/admin");
+        });
+      } else {
+        if (data?.message === "Email not Verified") {
+          const resendOtpResponse = await fetch(`${baseurl}/resend-otp`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: email.toLowerCase() }),
+          });
+
+          const mainResponse = await resendOtpResponse.json();
+
+          console.log("otp response data", mainResponse);
+
+          if(resendOtpResponse.ok){
+            setLoading(false)
+            Swal.fire({
+              title: "Email not Verified",
+              text: "Click Ok to Verify Email",
+              icon: "error",
+              // timer: 3500,
+              showConfirmButton: true,
+            }).then(() => {
+              Cookies.set("email", mainResponse?.data?.email)
+              Cookies.set("verificationKey", mainResponse?.data?.verificationKey)
+              Router.push({
+                pathname: "/auth/verify",
+                query: {
+                  email: mainResponse?.data?.email,
+                  verificationKey: mainResponse?.data?.verificationKey,
+                },
+              });
+            });
+          }else{
+            setLoading(false)
+            Swal.fire({
+              text: "An error occured. Check your internet connection and try again",
+              timer: 3500,
+              icon: "error",
+              showConfirmButton: true,
+            }); 
+          }
+        } else {
+          Swal.fire({
+            text: "An error occured. Check your internet connection and try again",
+            timer: 3500,
+            icon: "error",
+            showConfirmButton: true,
+          });
+        }
+      }
+    } catch (error) {
+      setLoading(false);
+      Swal.fire({
+        text: ErrorFunction(error),
+        timer: 3500,
+        icon: "error",
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -42,7 +170,7 @@ function Login() {
         Login to your account 📑
       </h1>
       <form
-        onSubmit={HandleSubmit}
+        onSubmit={HandleSumbit1}
         className=" mx-auto w-11/12 md:w-10/12 [&>*]:block space-y-6 md:space-y-8 lg:space-y-10 font-poppins-light"
       >
         <input
@@ -68,7 +196,7 @@ function Login() {
         />
         <input
           type="Submit"
-          defaultValue="Login"
+          defaultValue={!loading ? "Login" : "Loading..."}
           className="rounded-md hover:scale-105 duration-300 mx-auto md:py-4 py-2 px-20 text-lg md:text-xl lg:text-2xl cursor-pointer bg-purple text-white"
         />
       </form>
