@@ -1,7 +1,7 @@
 import { NewToken } from "@/components/NewToken";
 import "@/styles/globals.css";
 import Cookies from "js-cookie";
-import { RedirectToLogin } from "./auth/authUtils";
+import RedirectToLogin from "./auth/authUtils";
 import { useEffect, useState } from "react";
 
 export default function App({ Component, pageProps }) {
