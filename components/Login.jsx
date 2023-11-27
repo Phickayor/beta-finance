@@ -24,6 +24,9 @@ function Login() {
         Cookies.set("token", JSON.stringify(data.data.token));
         Cookies.set("user", JSON.stringify(data.data.user));
         Router.push("/admin/");
+      } else if (data.message === "Email not Verified") {
+        alert(data.message);
+        Router.push({ pathname: "/auth/verify", query: { email } });
       } else {
         alert(data.message);
       }

@@ -1,5 +1,6 @@
 import baseurl from "@/config/host";
 import React, { useRef, useState } from "react";
+import { ResendOtp } from "./ResendOtp";
 
 function Otp(props) {
   const [values, setValues] = useState({
@@ -9,27 +10,7 @@ function Otp(props) {
   const [otp, setOtp] = useState(null);
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const inputRefs = useRef([]);
-  const ResendOtp = async () => {
-    try {
-      const res = await fetch(`${baseurl}/resend-otp`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(values.email)
-      });
-      const data = await res.json();
-      alert(data.message);
-      if (data.success) {
-        setValues(...values, data.data);
-        alert("another otp has been sent successfully");
-      }
-    } catch (error) {
-      alert(
-        "An error occured while verifying mail. check your internet connection and try again."
-      );
-    }
-  };
+
   const handleInputChange = (index, event) => {
     let value = event.target.value;
 
@@ -45,6 +26,12 @@ function Otp(props) {
     if (value && index < otpValues.length - 1) {
       inputRefs.current[index + 1].focus();
     }
+  };
+  const HandleNewOtp = async () => {
+    const { message, data, success } = await ResendOtp(values.email);
+    success
+      ? (setValues(data), alert(message))
+      : alert("Couldn't resend Verification code. Try again");
   };
   const HandleVerification = async () => {
     setOtp(otpValues.join(""));
@@ -105,7 +92,7 @@ function Otp(props) {
       </form>
       <p
         className="font-poppins-semibold text-purple cursor-pointer"
-        onClick={ResendOtp}
+        onClick={HandleNewOtp}
       >
         Resend OTP
       </p>

@@ -9,8 +9,8 @@ function Clients() {
   return (
     <div className="py-5 mx-auto w-11/12 space-y-8">
       <Header navText="Home" navLink="/admin/" />
-      <AddClient />
-      <AllClients email={userState.email} />
+      <AddClient email={userState.email} />
+      <AllClients clients={userState.clients}/>
     </div>
   );
 }
