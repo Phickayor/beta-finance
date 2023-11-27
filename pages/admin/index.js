@@ -10,8 +10,6 @@ function Home() {
   useEffect(() => {
     if (user) {
       SetUserState(JSON.parse(user));
-    } else {
-      RedirectToLogin();
     }
   }, [user]);
   return (

@@ -49,6 +49,7 @@ function Login() {
           type="email"
           required
           placeholder="Email"
+          autoComplete="email"
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);

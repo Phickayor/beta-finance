@@ -6,8 +6,21 @@ import React, { useEffect, useState } from "react";
 
 function Verify() {
   var router = useRouter();
-  //   const [otpValues, SetOtpValues] = useState();
-  var { email } = router.query;
+  const [otpValues, SetOtpValues] = useState({
+    email: "",
+    verificationKey: ""
+  });
+  var email = router.query.email;
+  const HandleResendOtp = async (email) => {
+    var { data, message } = await ResendOtp(email);
+    SetOtpValues(data);
+    alert(message);
+  };
+  useEffect(() => {
+    if (email) {
+      HandleResendOtp(email);
+    }
+  });
   return (
     <>
       <img
@@ -22,13 +35,10 @@ function Verify() {
       />
       <Header navLink="/auth/" navText="Login" />
       <div className="h-screen flex flex-col justify-center">
-        {async () => {
-          const { message, data, success } = await ResendOtp(email);
-          SetOtpValues(data);
-          return (
-            <Otp email={data.email} verificationKey={data.verificationKey} />
-          );
-        }}
+        <Otp
+          email={otpValues.email}
+          verificationKey={otpValues.verificationKey}
+        />
       </div>
     </>
   );
