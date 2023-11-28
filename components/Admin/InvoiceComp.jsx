@@ -1,17 +1,9 @@
-import { bankCodeData } from "@/config/BankCodes";
-import { ErrorFunction } from "@/config/checkerror";
-import Link from "next/link";
-import Router from "next/router";
-import React, { useEffect, useState } from "react";
-import Swal from "sweetalert2";
+import React, { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import moment from "moment/moment";
 function InvoiceComp(props) {
-  const [loading, setLoading] = useState(false);
   const [copy, setCopy] = useState(false);
-  const [data, setData] = useState();
   console.log(props);
-  
   return (
     <div className="space-y-5">
       <div className="space-y-8">
@@ -28,8 +20,10 @@ function InvoiceComp(props) {
             </h3>
           </div>
           <div className="flex gap-5">
-            <h3>Payment Link:</h3>
-            <h3 className="font-semibold">{props.InvoiceState.paymentLink}</h3>
+            <h3 className="w-full">Payment Link:</h3>
+            <h3 className="font-semibold truncate">
+              {props.InvoiceState.paymentLink}
+            </h3>
           </div>
           <div className="flex gap-5">
             <h3>Amount:</h3>
@@ -40,8 +34,16 @@ function InvoiceComp(props) {
             <h3 className="font-semibold">{props.InvoiceState.currency}</h3>
           </div>
           <div className="flex gap-5">
-            <h3>Is Payment Completed?:</h3>
-            <h3 className="font-semibold">{props.InvoiceState.isPaid}</h3>
+            <h3 className="self-center">Payment Status:</h3>
+            {props.InvoiceState.isPaid ? (
+              <h3 className="font-semibold self-center bg-green-500 py-1 px-3 rounded-xl text-white">
+                PAID
+              </h3>
+            ) : (
+              <h3 className="font-semibold self-center bg-red-500 py-1 px-3 rounded-xl text-white">
+                NOT PAID
+              </h3>
+            )}
           </div>
           <div className="flex gap-5">
             <h3>Date:</h3>
@@ -52,46 +54,29 @@ function InvoiceComp(props) {
             </h3>
           </div>
         </div>
-        <div
-          style={{
-            width: "100%",
-            background: "white",
-            borderRadius: "10px",
-            padding: "20px",
-            height: "auto",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center"
-          }}
-        >
-          <div>{`https://beta-finance.netlify.app/payinvoice/${props.InvoiceState._id}`}</div>
+        <div className="flex justify-between gap-5  bg-white p-5 rounded-lg ">
+          <div className="self-center text-sm md:text-md truncate">{`https://beta-finance.netlify.app/payinvoice/${props.InvoiceState._id}`}</div>
 
-          <div>
-            <CopyToClipboard
-              text={`https://beta-finance.netlify.app/payinvoice/${props.InvoiceState._id}`}
-              onCopy={() => {
-                setCopy(true);
-              }}
-            >
-              <div
-                style={{
-                  cursor: "pointer"
-                }}
-              >
-                {copy ? (
-                  "Copied"
-                ) : (
-                  <div className="flex gap-2">
-                    <img
-                      src="/images/icons/copyIcon.svg"
-                      className="w-6 self-center"
-                    />
-                    <span className="self-center">Copy</span>
-                  </div>
-                )}
-              </div>
-            </CopyToClipboard>
-          </div>
+          <CopyToClipboard
+            text={`https://beta-finance.netlify.app/payinvoice/${props.InvoiceState._id}`}
+            onCopy={() => {
+              setCopy(true);
+            }}
+          >
+            <div className="cursor-pointer self-center w-full ">
+              {copy ? (
+                <span className="self-center">Copied</span>
+              ) : (
+                <div className="flex gap-2 self-center">
+                  <img
+                    src="/images/icons/copyIcon.svg"
+                    className="w-6 self-center"
+                  />
+                  <span className="self-center">Copy</span>
+                </div>
+              )}
+            </div>
+          </CopyToClipboard>
         </div>
       </div>
     </div>
