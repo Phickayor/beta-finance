@@ -15,14 +15,7 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     if (token) {
       SetAuthState(JSON.parse(token));
-    }else if(!Component.protected){
-        return (
-    <>
-      <Component {...pageProps} />
-      <ToastContainer />
-    </>
-  );
-    } else {
+    }else {
       RedirectToLogin();
     }
   }, [token]);
@@ -43,5 +36,10 @@ export default function App({ Component, pageProps }) {
       }
     }
   }
-
+   return (
+    <>
+      <Component {...pageProps} />
+      <ToastContainer />
+    </>
+  );
 }
