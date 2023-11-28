@@ -1,26 +1,25 @@
 import baseurl from "@/config/host";
-import Cookies from "js-cookie";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 function AddInvoice(props) {
-  const token = Cookies.get("token");
   const [productName, setproductName] = useState("");
   const [total, settotal] = useState("");
   const [purchasedDate, setpurchasedDate] = useState("");
 
-  const CreateInvoice = async () => {
+  const CreateInvoice = async (e) => {
+    e.preventDefault();
     try {
-      const res = await fetch(`${baseurl}/create/${props.clientId}`, {
+      const res = await fetch(`${baseurl}/invoice/create/${props.clientId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token.accesstoken}`
+          authorization: `Bearer ${props.accesstoken}`
         },
         body: JSON.stringify({ productName, purchasedDate, total })
       });
       const data = await res.json();
-      data.success
+      res.ok
         ? toast.success("Invoice created Successfully")
         : toast.error("We encountered an issue, Try again ");
     } catch (error) {
@@ -31,6 +30,7 @@ function AddInvoice(props) {
     setpurchasedDate("");
     settotal("");
   };
+
   return (
     <div className="space-y-4 mx-auto lg:w-11/12">
       <h1 className="text-xl font-poppins-semibold">{props.clientName}</h1>
@@ -49,7 +49,7 @@ function AddInvoice(props) {
         />
         <input
           type="number"
-          placeholder="total (₦)"
+          placeholder="Total (₦)"
           name="total"
           value={total}
           onChange={(e) => settotal(e.target.value)}
@@ -67,7 +67,7 @@ function AddInvoice(props) {
         />
         <div className=" md:p-5 flex justify-between gap-5">
           <button
-            onClick={CreateInvoice}
+            type="submit"
             className="bg-purple font-poppins-light text-white rounded-md self-center py-2 md:py-3 px-5"
           >
             Create Invoice

@@ -1,15 +1,16 @@
 import baseurl from "@/config/host";
+import Cookies from "js-cookie";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 function AllClients(props) {
   const [Clients, setClients] = useState([]);
-  const [ClientsNumber, setClientsNumber] = useState(0);
-  function OpenClient(event) {
+  function OpenClient(client) {
     Router.push({
-      pathname: `/admin/clients/${event}`
+      pathname: `/admin/clients/${client._id}`
     });
+    Cookies.set("client",JSON.stringify(client));
   }
   useEffect(() => {
     const fetchClients = async () => {
@@ -24,17 +25,17 @@ function AllClients(props) {
         });
         const data = await res.json();
         res.ok
-          ? (console.log(data.data),
-            setClients(data.data),
-            setClientsNumber(data.data.length))
+          ? (console.log(data.data), setClients(data.data))
           : console.log(data.message);
       } catch (error) {
         console.log(error);
         toast.error(`Error: ${error.message}`);
       }
     };
-    fetchClients();
-  }, [props.accesstoken, props.userId]);
+    if (props) {
+      fetchClients();
+    }
+  }, [props]);
   return (
     <div className="mx-auto lg:w-11/12 flex flex-col gap-4">
       <h1 className="text-xl font-poppins-semibold">
@@ -44,8 +45,8 @@ function AllClients(props) {
       {Clients ? (
         Clients.map((client) => (
           <div
-            key={client.userId}
-            onClick={() => OpenClient(client.userId)}
+            key={client._id}
+            onClick={() => OpenClient(client)}
             className="bg-white cursor-pointer px-3 md:px-6 p-6 rounded-lg flex justify-between gap-2"
           >
             <div className="self-center">

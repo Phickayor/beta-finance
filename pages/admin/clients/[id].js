@@ -1,29 +1,24 @@
 import { useEffect, useState } from "react";
 import Header from "@/components/Admin/Header";
-import { useRouter } from "next/router";
 import AddInvoice from "@/components/Admin/AddInvoice";
 import AllInvoices from "@/components/Admin/AllInvoices";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import baseurl from "@/config/host";
-import { toast } from "react-toastify";
 
 function Client() {
-  const router = useRouter();
-  const ClientId = router.query.id;
-  const [userState, SetUserState] = useState({});
   const [AuthState, SetAuthState] = useState({});
+  const [ClientState, SetClientState] = useState({});
   const token = Cookies.get("token");
-  const user = Cookies.get("user");
+  const client = Cookies.get("client");
 
   useEffect(() => {
-    if (user) {
-      SetUserState(JSON.parse(user));
-    }
     if (token) {
       SetAuthState(JSON.parse(token));
     }
-  }, [user, token]);
+    if (client) {
+      SetClientState(JSON.parse(client));
+    }
+  }, [token, client]);
 
   return (
     <div className="py-5 mx-auto w-11/12">
@@ -31,10 +26,15 @@ function Client() {
 
       {Client ? (
         <div className=" space-y-4 md:space-y-8">
-          <AddInvoice clientId={ClientId} clientName={Client.fullName} />
+          <AddInvoice
+            clientId={ClientState._id}
+            clientName={ClientState.fullName}
+            accesstoken={AuthState.accesstoken}
+          />
           <AllInvoices
-            clientId={ClientId}
-            userId={userState._id}
+            clientId={ClientState._id}
+            // clientInvoice={ClientState.clientInvoice}
+            userId={ClientState.userId}
             accesstoken={AuthState.accesstoken}
           />
         </div>

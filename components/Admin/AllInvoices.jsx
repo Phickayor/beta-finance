@@ -5,9 +5,6 @@ import { toast } from "react-toastify";
 
 function AllInvoices(props) {
   const [invoices, setInvoices] = useState([]);
-  const [invoicesNumber, setInvoicesNumber] = useState(0);
-
-  console.log(props);
 
   function OpenInvoice(event) {
     Router.push({
@@ -17,7 +14,7 @@ function AllInvoices(props) {
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
-        const res = await fetch(`${baseurl}/client/${props.clientId}`, {
+        const res = await fetch(`${baseurl}/invoice/client/${props.clientId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -26,24 +23,25 @@ function AllInvoices(props) {
         });
         const data = await res.json();
         res.ok
-          ? (console.log(data.data),
-            setInvoices(data.data),
-            setInvoicesNumber(invoices.length))
+          ? (console.log(data.data.clientInvoice),
+            setInvoices(data.data.clientInvoice))
           : console.log(data.message);
       } catch (error) {
         console.log(error);
         toast.error(`Error: ${error.message}`);
       }
     };
-    fetchInvoices();
-  }, [props.accesstoken, props.userId, props.clientId,invoices.length]);
+    if (props.clientId) {
+      fetchInvoices();
+    }
+  }, [props.clientId, props.accesstoken]);
   return (
     <div className="mx-auto lg:w-11/12 flex flex-col gap-4">
       <h1 className="text-xl font-poppins-semibold">
-        INVOICES({invoicesNumber})
+        INVOICES({invoices.length})
       </h1>
       {/* Commenting till i can access server */}
-      {invoices > 0 ? (
+      {invoices ? (
         invoices.map((invoice, index) => (
           <div
             key={index}
