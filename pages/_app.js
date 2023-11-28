@@ -13,10 +13,17 @@ export default function App({ Component, pageProps }) {
   const [AuthState, SetAuthState] = useState({});
   const token = Cookies.get("token");
   useEffect(() => {
-    if (Component.protected && !token) {
-      RedirectToLogin();
-    } else {
+    if (token) {
       SetAuthState(JSON.parse(token));
+    }else if(!component.protected){
+        return (
+    <>
+      <Component {...pageProps} />
+      <ToastContainer />
+    </>
+  );
+    } else {
+      RedirectToLogin();
     }
   }, [token]);
 
@@ -36,10 +43,5 @@ export default function App({ Component, pageProps }) {
       }
     }
   }
-  return (
-    <>
-      <Component {...pageProps} />
-      <ToastContainer />
-    </>
-  );
+
 }
