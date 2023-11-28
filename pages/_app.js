@@ -13,10 +13,10 @@ export default function App({ Component, pageProps }) {
   const [AuthState, SetAuthState] = useState({});
   const token = Cookies.get("token");
   useEffect(() => {
-    if (token) {
-      SetAuthState(JSON.parse(token));
-    } else {
+    if (Component.protected && !token) {
       RedirectToLogin();
+    } else {
+      SetAuthState(JSON.parse(token));
     }
   }, [token]);
 
