@@ -1,4 +1,5 @@
 import baseurl from "@/config/host";
+import Cookies from "js-cookie";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -6,10 +7,11 @@ import { toast } from "react-toastify";
 function AllInvoices(props) {
   const [invoices, setInvoices] = useState([]);
 
-  function OpenInvoice(event) {
+  function OpenInvoice(invoice) {
     Router.push({
-      pathname: `/admin/invoice/${event}`
+      pathname: `/admin/invoice/${invoice._id}`
     });
+    Cookies.set("invoice", JSON.stringify(invoice));
   }
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -54,12 +56,12 @@ function AllInvoices(props) {
             </div>
             <div className="self-center">
               <h3
-                className="md:text-lg font-poppins-semibold"
+                className="md:text-lg cursor-pointer font-poppins-semibold"
                 onClick={() => {
-                  OpenInvoice(invoice?._id);
+                  OpenInvoice(invoice);
                 }}
               >
-                View Invoice
+                View Invoice 📑
               </h3>
             </div>
           </div>

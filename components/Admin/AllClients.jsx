@@ -10,7 +10,7 @@ function AllClients(props) {
     Router.push({
       pathname: `/admin/clients/${client._id}`
     });
-    Cookies.set("client",JSON.stringify(client));
+    Cookies.set("client", JSON.stringify(client));
   }
   useEffect(() => {
     const fetchClients = async () => {
@@ -46,7 +46,6 @@ function AllClients(props) {
         Clients.map((client) => (
           <div
             key={client._id}
-            onClick={() => OpenClient(client)}
             className="bg-white cursor-pointer px-3 md:px-6 p-6 rounded-lg flex justify-between gap-2"
           >
             <div className="self-center">
@@ -55,7 +54,12 @@ function AllClients(props) {
               </h1>
             </div>
             <div className="self-center">
-              <h3 className="md:text-lg font-poppins-semibold">Invoice 📑</h3>
+              <h3
+                onClick={() => OpenClient(client)}
+                className="md:text-lg font-poppins-semibold"
+              >
+                View Customer
+              </h3>
             </div>
           </div>
         ))

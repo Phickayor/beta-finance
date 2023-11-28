@@ -1,283 +1,97 @@
 import { bankCodeData } from "@/config/BankCodes";
 import { ErrorFunction } from "@/config/checkerror";
-import baseurl from "@/config/host";
-import Cookies from "js-cookie";
 import Link from "next/link";
 import Router from "next/router";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { CopyToClipboard } from "react-copy-to-clipboard";
 import moment from "moment/moment";
-// import "@/styles/global.css"
-function InvoiceComp({props}) {
-
-    console.log("propsid", props)
-
+function InvoiceComp(props) {
   const [loading, setLoading] = useState(false);
   const [copy, setCopy] = useState(false);
-  const [data, setData] = useState()
-
-  let id = "i"
-
-  const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : "";
-
-  console.log(token.accesstoken);
-
+  const [data, setData] = useState();
+  console.log(props);
   
- 
-  useEffect(() => {
-    
-    const fetchClient = async () => {
-      try {
-        const res = await fetch(`${baseurl}/invoice/${"65620004da035f6166989b82"}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            authorization: `Bearer ${token.accesstoken}`
-          },
-        });
-        const myData = await res.json();
-        setData(myData)
-
-        console.log(data, "data")
-        set
-        res.ok
-          ? (console.log(data.data) )
-          : console.log(data.message);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchClient();
-  }, []);
-
   return (
-    <div
-      style={{
-        width: "100%",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        gap:"30px"
-      }}
-    >
-      <div
-      style={{
-        width:"100%",
-        fontSize:"20px",
-        display:"flex",
-        alignItems:"flex-start",
-        // marginBottom:"20px",
-        fontWeight:"bold"
-      }}
-      >One Invoice</div>
-      <div
-        style={{
-          width: "100%",
-          background: "white",
-          borderRadius: "10px",
-          padding: "20px",
-          height: "auto",
-          display: "flex",
-          justifyContent: "center",
-          marginBottom:"20px"
-        }}
-      >
+    <div className="space-y-5">
+      <div className="space-y-8">
+        <div className="flex text-xl font-bold">One Invoice</div>
+        <div className="bg-white p-8 rounded-lg flex flex-col gap-5">
+          <div className="flex gap-5">
+            <h3>Product Name:</h3>
+            <h3 className="font-semibold">{props.InvoiceState.productName}</h3>
+          </div>
+          <div className="flex gap-5">
+            <h3>Product Description:</h3>
+            <h3 className="font-semibold">
+              {props.InvoiceState.productDescription}
+            </h3>
+          </div>
+          <div className="flex gap-5">
+            <h3>Payment Link:</h3>
+            <h3 className="font-semibold">{props.InvoiceState.paymentLink}</h3>
+          </div>
+          <div className="flex gap-5">
+            <h3>Amount:</h3>
+            <h3 className="font-semibold">{props.InvoiceState.total}</h3>
+          </div>
+          <div className="flex gap-5">
+            <h3>Currency:</h3>
+            <h3 className="font-semibold">{props.InvoiceState.currency}</h3>
+          </div>
+          <div className="flex gap-5">
+            <h3>Is Payment Completed?:</h3>
+            <h3 className="font-semibold">{props.InvoiceState.isPaid}</h3>
+          </div>
+          <div className="flex gap-5">
+            <h3>Date:</h3>
+            <h3 className="font-semibold">
+              {moment(props.InvoiceState.purchasedDate).format(
+                "dddd DD MMM YYYY "
+              )}
+            </h3>
+          </div>
+        </div>
         <div
           style={{
-            width: "90%",
+            width: "100%",
+            background: "white",
+            borderRadius: "10px",
+            padding: "20px",
+            height: "auto",
             display: "flex",
-            flexDirection: "column",
-            gap:"20px"
+            justifyContent: "space-between",
+            alignItems: "center"
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div
-            style={{
-                fontWeight:"semi-bold",
-                width:"200px"
-            }}
+          <div>{`https://beta-finance.netlify.app/payinvoice/${props.InvoiceState._id}`}</div>
+
+          <div>
+            <CopyToClipboard
+              text={`https://beta-finance.netlify.app/payinvoice/${props.InvoiceState._id}`}
+              onCopy={() => {
+                setCopy(true);
+              }}
             >
-                Product Name:
-            </div>
-            <div
-            style={{
-                fontWeight:"bold",
-                fontSize:"18px"
-            }}
-            >{data?.productName}</div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div
-            style={{
-                fontWeight:"semi-bold",
-                width:"200px"
-            }}
-            >
-                Product Description:
-            </div>
-            <div
-            style={{
-                fontWeight:"bold",
-                fontSize:"18px"
-            }}
-            >{data?.productDescription}</div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div
-            style={{
-                fontWeight:"semi-bold",
-                width:"200px"
-            }}
-            >
-               Payment Link
-            </div>
-            <div
-            style={{
-                fontWeight:"bold",
-                fontSize:"18px"
-            }}
-            >{data?.paymentLink}</div>
-          </div>
-        
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div
-            style={{
-                fontWeight:"semi-bold",
-                width:"200px"
-            }}
-            >
-              Amount
-            </div>
-            <div
-            style={{
-                fontWeight:"bold",
-                fontSize:"18px"
-            }}
-            >{data?.amount}</div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div
-            style={{
-                fontWeight:"semi-bold",
-                width:"200px"
-            }}
-            >
-              Currency
-            </div>
-            <div
-            style={{
-                fontWeight:"bold",
-                fontSize:"18px"
-            }}
-            >{data?.currency}</div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div
-            style={{
-                fontWeight:"semi-bold",
-                width:"200px"
-            }}
-            >
-              Is Payment Completed?
-            </div>
-            <div
-            style={{
-                fontWeight:"bold",
-                fontSize:"18px"
-            }}
-            >{data?.isPaid? "Completed" : "InComplete"}</div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div
-            style={{
-                fontWeight:"semi-bold",
-                width:"200px"
-            }}
-            >
-              Date
-            </div>
-            <div
-            style={{
-                fontWeight:"bold",
-                fontSize:"18px"
-            }}
-            >{moment(data?.createdAt).format("dddd DD MMM YYY ")}</div>
-          </div>
-        
-          
-        </div>
-        
-      </div>
-      <div
-       style={{
-        width: "100%",
-        background: "white",
-        borderRadius: "10px",
-        padding: "20px",
-        height: "auto",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-      >
-        <div>{`https://beta-finance.netlify.app/payinvoice/${data?._id}`}</div>
-        <div>
-            <div>
-                <CopyToClipboard
-                text={`https://beta-finance.netlify.app/payinvoice/${data?._id}`}
-                onCopy={()=>{
-                    setCopy(true)
+              <div
+                style={{
+                  cursor: "pointer"
                 }}
-                >
-                    <div style={{
-                        cursor:"pointer"
-                    }}>
-                         {
-                        copy? "Copied" : "Copy Url"
-                    }
-                    </div>
-                   
-                   
-                </CopyToClipboard>
-                
-            </div>
+              >
+                {copy ? (
+                  "Copied"
+                ) : (
+                  <div className="flex gap-2">
+                    <img
+                      src="/images/icons/copyIcon.svg"
+                      className="w-6 self-center"
+                    />
+                    <span className="self-center">Copy</span>
+                  </div>
+                )}
+              </div>
+            </CopyToClipboard>
+          </div>
         </div>
       </div>
     </div>
