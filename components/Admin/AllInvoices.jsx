@@ -17,7 +17,7 @@ function AllInvoices(props) {
   useEffect(() => {
     const fetchInvoices = async () => {
       try {
-        const res = await fetch(`${baseurl}/client/${props?.clientId}`, {
+        const res = await fetch(`${baseurl}/client/${props.clientId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -36,7 +36,7 @@ function AllInvoices(props) {
       }
     };
     fetchInvoices();
-  }, [props.accesstoken, props.userId, props.ClientId]);
+  }, [props.accesstoken, props.userId, props.clientId,invoices.length]);
   return (
     <div className="mx-auto lg:w-11/12 flex flex-col gap-4">
       <h1 className="text-xl font-poppins-semibold">
