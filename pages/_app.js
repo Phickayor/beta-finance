@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     if (token) {
       SetAuthState(JSON.parse(token));
-    }else if(!component.protected){
+    }else if(!Component.protected){
         return (
     <>
       <Component {...pageProps} />
