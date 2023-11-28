@@ -7,7 +7,7 @@ function AllInvoices(props) {
   const [invoices, setInvoices] = useState([]);
   const [invoicesNumber, setInvoicesNumber] = useState(0);
 
-  console.log(props)
+  console.log(props);
 
   function OpenInvoice(event) {
     Router.push({
@@ -28,7 +28,7 @@ function AllInvoices(props) {
         res.ok
           ? (console.log(data.data),
             setInvoices(data.data),
-            setInvoicesNumber(data.data.length))
+            setInvoicesNumber(invoices.length))
           : console.log(data.message);
       } catch (error) {
         console.log(error);
@@ -55,12 +55,14 @@ function AllInvoices(props) {
               </h1>
             </div>
             <div className="self-center">
-
-              <h3 className="md:text-lg font-poppins-semibold"
-              onClick={()=>{
-                OpenInvoice(invoice?._id)
-              }}
-              >View Invoice</h3>
+              <h3
+                className="md:text-lg font-poppins-semibold"
+                onClick={() => {
+                  OpenInvoice(invoice?._id);
+                }}
+              >
+                View Invoice
+              </h3>
             </div>
           </div>
         ))
